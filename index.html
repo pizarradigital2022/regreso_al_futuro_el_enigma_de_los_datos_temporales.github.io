@@ -1,9 +1,3 @@
-Aquí tienes el código completo corregido. He solucionado los dos puntos que comentas:
-
-1. **Añadida la Recta de regresión de X sobre Y:** Ahora el juego cuenta con un par de cartas más (21 pares en total, 42 cartas en el tablero). Su fórmula formal matemática utilizando la letra griega sigma ($\sigma$) ha sido perfectamente integrada: $x - \bar{x} = \frac{\sigma_{xy}}{\sigma_y^2} (y - \bar{y})$.
-2. **Corrección radical de los subíndices y superíndices "flotantes":** El problema ocurría porque las etiquetas HTML `<sub>` y `<sup>` tienen comportamientos por defecto en los navegadores que alteran el interlineado (`line-height`) y "empujan" el texto hacia arriba o abajo de forma descontrolada dentro de los contenedores flexibles (`flexbox`) de las cartas. He rediseñado por completo el CSS para estas etiquetas, forzándolas a tener una posición absoluta alineada con la línea base del texto. Ahora se verán perfectas, compactas y alineadas en cualquier pantalla sin bailar ni parecer superíndices.
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -762,5 +756,3 @@ Aquí tienes el código completo corregido. He solucionado los dos puntos que co
     </script>
 </body>
 </html>
-
-```

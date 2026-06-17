@@ -200,14 +200,14 @@
         .tablero {
             display: grid;
             grid-template-columns: repeat(6, 1fr) !important;
-            gap: 6px; /* Reducido espacio intermedio */
+            gap: 6px;
             margin-top: 15px;
             perspective: 1000px;
         }
 
         /* Cartas de dimensiones calibradas al milímetro */
         .carta {
-            height: 68px; /* Altura ideal balanceada */
+            height: 68px;
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
@@ -220,7 +220,7 @@
             box-shadow: 2px 2px 0px #000;
             user-select: none;
             box-sizing: border-box;
-            padding: 3px 4px; /* Ajuste interno crítico */
+            padding: 3px 4px;
             transition: all 0.15s ease;
         }
 
@@ -252,7 +252,7 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 0.85rem; /* Ajustado para prevenir el quiebre de columnas en zoom 100% */
+            font-size: 0.85rem;
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             white-space: nowrap;
@@ -260,7 +260,7 @@
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.7rem; /* Texto de nombres ligeramente menor para no empujar bordes */
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: -0.2px;
             line-height: 1.1;
@@ -385,7 +385,7 @@
             padding-bottom: 10px;
         }
         .modal-contenedor ul { padding-left: 20px; }
-        .modal-contenedor li { margin-bottom: 12px; font-size: 1.05rem; line-height: 1.4; }
+        .modal-contenedor li { margin-bottom: 12px; font-size: 1rem; line-height: 1.4; }
         .modal-cerrar {
             margin-top: 15px;
             float: right;
@@ -474,7 +474,11 @@
                     • <b>f<sub>i</sub></b> = Frecuencia relativa.<br>
                     • <b>F<sub>i</sub></b> = Frecuencia relativa acumulada.
                 </li>
-                <li><b>Medias Marginales:</b> Arreglos calculados con barra superior de nivelación horizontal (<div class="variable-barra" style="color:var(--bttf-azul); font-family:serif;"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>x</div> / <div class="variable-barra" style="color:var(--bttf-azul); font-family:serif;"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>y</div>) que representan las medias aritméticas de cada variable.</li>
+                <li><b>Componentes de Datos Continuos (Moda e Intervalos):</b><br>
+                    • <b>&Delta;n<sub>i</sub></b> = Diferencia de frecuencia absoluta con el intervalo anterior (n<sub>i</sub> - n<sub>i-1</sub>).<br>
+                    • <b>&Delta;n<sub>i+1</sub></b> = Diferencia de frecuencia absoluta con el intervalo posterior (n<sub>i</sub> - n<sub>i+1</sub>).<br>
+                    • <b>a<sub>i</sub></b> = Amplitud del intervalo modal o analizado (Límite superior - Límite inferior).
+                </li>
                 <li><b>Parámetros de Dispersión Coeficiente:</b> Toda la notación bidimensional está unificada rigurosamente bajo la letra griega sigma (<b>σ</b>) para variables, desviaciones típicas y covarianzas temporales, descartando el uso de la letra 's'.</li>
             </ul>
             <button class="modal-cerrar" onclick="cerrarLeyenda()">Entendido</button>

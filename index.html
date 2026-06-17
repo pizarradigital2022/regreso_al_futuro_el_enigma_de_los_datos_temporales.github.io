@@ -197,23 +197,23 @@
             box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
         }
 
-        /* TABLERO SOLICITADO: 6 COLUMNAS REALES FIJAS */
+        /* SEGUNDA PANTALLA: COLA DE GRID FIJA EN 6 COLUMNAS */
         .tablero {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(6, 1fr) !important; /* Forzado estricto */
+            gap: 12px;
             margin-top: 20px;
             perspective: 1000px;
         }
 
-        /* Adaptabilidad controlada solo para tablets y móviles muy pequeños */
-        @media (max-width: 1400px) { .tablero { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 900px) { .tablero { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .tablero { grid-template-columns: repeat(1, 1fr); } }
+        /* Solo se reduce en pantallas ultra-pequeñas de móviles para evitar colapsos de texto */
+        @media (max-width: 600px) { 
+            .tablero { grid-template-columns: repeat(2, 1fr) !important; } 
+        }
 
         /* Cartas compactas adaptadas a distribución panorámica de 6 columnas */
         .carta {
-            height: 80px;
+            height: 85px;
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
@@ -258,7 +258,7 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 1.05rem; /* Calibrado para evitar desbordamiento en celdas de 6 columnas */
+            font-size: 1.05rem; 
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             white-space: nowrap;

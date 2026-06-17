@@ -38,14 +38,14 @@
             min-height: 100vh;
         }
 
-        /* DISEÑO DE AMPLIO ESPECTRO: 95% del ancho de la pantalla */
+        /* DISEÑO MAXIMIZADO: 95% Reales de la pantalla */
         .container {
             background-color: var(--gris-oscuro);
             border: 3px solid var(--bttf-azul);
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             width: 95%;
-            max-width: 1600px;
+            max-width: 1750px;
             box-shadow: var(--neon-glow-azul);
             text-align: center;
             box-sizing: border-box;
@@ -66,27 +66,27 @@
             font-weight: 900;
             color: var(--bttf-naranja);
             text-shadow: 3px 3px 0px #000, var(--neon-glow-naranja);
-            font-size: 3.2rem;
+            font-size: 3rem;
             margin: 0 0 5px 0;
             letter-spacing: 2px;
         }
 
         h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--bttf-azul);
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .zona-imagen {
             width: 100%;
-            height: 140px;
+            height: 120px;
             background-color: rgba(0,0,0,0.4);
             border: 2px solid #2a364f;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -94,7 +94,7 @@
             position: relative;
         }
         .zona-imagen i {
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: rgba(0, 243, 255, 0.15);
             position: absolute;
             z-index: 1;
@@ -137,7 +137,7 @@
         .activa { display: block; }
 
         .config-seccion {
-            margin: 20px 0;
+            margin: 15px 0;
             padding: 20px;
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid #2a364f;
@@ -153,7 +153,7 @@
         }
 
         .config-seccion ul { padding-left: 20px; margin: 10px 0; }
-        .config-seccion li { margin-bottom: 10px; font-size: 1.05rem; line-height: 1.5; }
+        .config-seccion li { margin-bottom: 8px; font-size: 1.05rem; line-height: 1.5; }
 
         #inputs-grupos {
             display: flex;
@@ -169,8 +169,8 @@
             background-color: var(--gris-metal);
             border: 2px solid var(--bttf-azul);
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             font-family: 'Orbitron', sans-serif;
             font-size: 1.1rem;
             flex-wrap: wrap;
@@ -197,21 +197,23 @@
             box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
         }
 
-        /* DISTRIBUCIÓN REVERTIDA A MÚLTIPLES COLUMNAS (4 Columnas optimizadas) */
+        /* TABLERO SOLICITADO: 6 COLUMNAS REALES FIJAS */
         .tablero {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
             margin-top: 20px;
             perspective: 1000px;
         }
 
-        @media (max-width: 1200px) { .tablero { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .tablero { grid-template-columns: repeat(1, 1fr); } }
+        /* Adaptabilidad controlada solo para tablets y móviles muy pequeños */
+        @media (max-width: 1400px) { .tablero { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 900px) { .tablero { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .tablero { grid-template-columns: repeat(1, 1fr); } }
 
-        /* Cartas rectangulares compactas y extendidas */
+        /* Cartas compactas adaptadas a distribución panorámica de 6 columnas */
         .carta {
-            height: 85px;
+            height: 80px;
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
@@ -224,12 +226,12 @@
             box-shadow: 3px 3px 0px #000;
             user-select: none;
             box-sizing: border-box;
-            padding: 8px 12px;
+            padding: 5px 8px;
             transition: all 0.2s ease;
         }
 
         .carta i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--bttf-naranja);
             filter: drop-shadow(0px 0px 4px rgba(255,138,0,0.5));
         }
@@ -237,7 +239,7 @@
         .carta:hover {
             border-color: var(--bttf-azul);
             box-shadow: 0px 0px 10px var(--bttf-azul);
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
         .carta.volteada {
@@ -248,7 +250,7 @@
             cursor: default;
         }
 
-        /* ====== MOTOR GRÁFICO PARA MATEMÁTICAS ALINEADO CENTRALMENTE ====== */
+        /* ====== MOTOR GRÁFICO MATEMÁTICO ALINEADO ====== */
         .carta-contenido {
             width: 100%;
             height: 100%;
@@ -256,7 +258,7 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 1.1rem; /* Adaptado dinámicamente para que quepa en 4 columnas sin romperse */
+            font-size: 1.05rem; /* Calibrado para evitar desbordamiento en celdas de 6 columnas */
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             white-space: nowrap;
@@ -264,15 +266,15 @@
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
             line-height: 1.2;
             text-align: center;
             white-space: normal;
         }
 
-        /* Contenedor flexible para garantizar alineación horizontal del signo igual */
+        /* Bloque flexible para igualar el nivel horizontal de la ecuación */
         .ecuacion-flex {
             display: inline-flex;
             align-items: center;
@@ -280,7 +282,7 @@
             gap: 4px;
         }
 
-        /* Contenedor específico para variables con barra (Media) */
+        /* Contenedor específico para variables con barra superior */
         .variable-barra {
             display: inline-flex;
             flex-direction: column;
@@ -296,14 +298,14 @@
             margin-bottom: 1px;
         }
 
-        /* Raíces Cuadradas */
+        /* Estructura de Raíces */
         .raiz-cuadrada {
             display: inline-flex;
             align-items: center;
         }
 
         .raiz-cuadrada .simbolo {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-family: 'Times New Roman', serif;
             margin-right: 1px;
             transform: translateY(-1px);
@@ -322,7 +324,7 @@
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 4px;
+            padding: 0 3px;
             line-height: 1.1;
         }
 
@@ -388,7 +390,7 @@
                <ul>
                  <li><b>Glosario Temporal Base:</b> N (Población), n<span class="sub-leyenda">i</span> (Frecuencia absoluta), N<span class="sub-leyenda">i</span> (Absoluta acumulada), f<span class="sub-leyenda">i</span> (Relativa), F<span class="sub-leyenda">i</span> (Relativa acumulada).</li>
                  <li><b>Medias Marginales:</b> <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>x</div> / <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>y</div> (Medias marginales aritméticas).</li>
-                 <li><b>Parámetros de Dispersión Coeficiente:</b> Notación basada en la letra griega sigma ($\sigma$) para desvelar las desviaciones y covarianzas bidimensionales.</li>
+                 <li><b>Parámetros de Dispersión Coeficiente:</b> Notación basada en la letra griega sigma (<b>σ</b>) para desvelar las desviaciones y covarianzas bidimensionales.</li>
                </ul>
             </div>
           

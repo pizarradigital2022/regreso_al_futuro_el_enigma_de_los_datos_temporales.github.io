@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regreso al Futuro: El Enigma de los Datos Temporales</title>
+    <link rel="icon" type="image/x-icon" href="./resources/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Urbanist:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --bttf-naranja: #ff8a00;
+            --bttf-amarillo: #ffcc00;
+            --bttf-azul: #00f3ff;
+            --bttf-rojo: #ff2a2a;
+            --negro-condensador: #090d16;
+            --gris-metal: #1f293d;
+            --gris-oscuro: #111827;
+            --neon-glow-azul: 0px 0px 15px rgba(0, 243, 255, 0.6);
+            --neon-glow-naranja: 0px 0px 15px rgba(255, 138, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background-color: var(--negro-condensador);
+            background-image: 
+                linear-gradient(rgba(255, 138, 0, 0.03) 2px, transparent 2px), 
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--gris-oscuro);
+            border: 3px solid var(--bttf-azul);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: var(--neon-glow-azul);
+            text-align: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Remates estéticos de circuitos temporales */
+        .container::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 30px; height: 30px;
+            border-top: 5px solid var(--bttf-naranja); border-left: 5px solid var(--bttf-naranja);
+        }
+        .container::after {
+            content: ''; position: absolute; bottom: 0; right: 0; width: 30px; height: 30px;
+            border-bottom: 5px solid var(--bttf-naranja); border-right: 5px solid var(--bttf-naranja);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            color: var(--bttf-naranja);
+            text-shadow: 3px 3px 0px #000, var(--neon-glow-naranja);
+            font-size: 3.2rem;
+            margin: 0 0 5px 0;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--bttf-azul);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+        }
+
+        /* Contenedores de imágenes adaptativos por pantalla */
+        .zona-imagen {
+            width: 100%;
+            height: 180px;
+            background-color: rgba(0,0,0,0.4);
+            border: 2px solid #2a364f;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .zona-imagen i {
+            font-size: 4rem;
+            color: rgba(0, 243, 255, 0.15);
+            position: absolute;
+            z-index: 1;
+        }
+        .zona-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+        }
+
+        button, select {
+            background-color: var(--bttf-naranja);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 12px 28px;
+            border: 2px solid var(--bttf-amarillo);
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: var(--bttf-azul);
+            color: #000;
+            border-color: #fff;
+            box-shadow: 4px 4px 0px var(--bttf-naranja);
+        }
+
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000;
+        }
+
+        input[type="text"], input[type="number"], select {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--gris-metal);
+            color: #fff;
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 2px solid var(--bttf-azul);
+            border-radius: 4px;
+            margin: 5px;
+        }
+
+        .pantalla { display: none; }
+        .activa { display: block; }
+
+        .config-seccion {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #2a364f;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .config-seccion h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--bttf-amarillo);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .config-seccion ul { padding-left: 20px; margin: 10px 0; }
+        .config-seccion li { margin-bottom: 10px; font-size: 1.05rem; line-height: 1.5; }
+
+        #inputs-grupos {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .info-juego {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: var(--gris-metal);
+            border: 2px solid var(--bttf-azul);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .turno-actual {
+            padding: 6px 18px;
+            border-radius: 4px;
+            border: 2px solid #fff;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .reloj {
+            background-color: #000;
+            padding: 8px 18px;
+            border: 2px solid var(--bttf-rojo);
+            border-radius: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.4rem;
+            color: var(--bttf-rojo);
+            box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
+        }
+
+        /* TABLERO INTERACTIVO OPTIMIZADO PARA MATRIZ DE 40 TARJETAS (8 COLUMNAS x 5 FILAS) */
+        .tablero {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+            perspective: 1000px;
+        }
+
+        /* Ajustes de responsividad para mantener la cuadricula legible */
+        @media (max-width: 1000px) { .tablero { grid-template-columns: repeat(6, 1fr); } }
+        @media (max-width: 750px) { .tablero { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 500px) { .tablero { grid-template-columns: repeat(3, 1fr); } }
+
+        .carta {
+            height: 105px;
+            background-color: #1e293b;
+            background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
+            background-size: 10px 10px;
+            border: 2px solid #334155;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 3px 3px 0px #000;
+            user-select: none;
+            box-sizing: border-box;
+            padding: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .carta i {
+            font-size: 1.8rem;
+            color: var(--bttf-naranja);
+            filter: drop-shadow(0px 0px 4px rgba(255,138,0,0.5));
+        }
+
+        .carta:hover {
+            border-color: var(--bttf-azul);
+            box-shadow: 0px 0px 10px var(--bttf-azul);
+            transform: scale(1.03);
+        }
+
+        /* Estado al voltear la tarjeta */
+        .carta.volteada {
+            background-color: #f8fafc;
+            background-image: none;
+            border-color: #fff;
+            box-shadow: 0px 0px 15px rgba(255,255,255,0.2);
+            cursor: default;
+        }
+
+        /* Contenido textual/fórmula de las tarjetas */
+        .carta-contenido {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gris-oscuro);
+            font-weight: bold;
+            text-align: center;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        .carta-contenido.tipo-nombre {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        /* Estilo matemático MathML para evitar desbordamiento y saltos feos */
+        .carta-contenido math {
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .carta.emparejada {
+            background-color: rgba(17, 24, 39, 0.6);
+            background-image: none;
+            border: 2px dashed rgba(0, 243, 255, 0.2);
+            box-shadow: none;
+            pointer-events: none;
+        }
+        .carta.emparejada * {
+            visibility: hidden;
+        }
+
+        /* Marcadores y pantalla de resultados */
+        .lista-resultados {
+            list-style: none;
+            padding: 0;
+            font-size: 1.2rem;
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .lista-resultados li {
+            margin: 12px 0;
+            padding: 15px;
+            background: rgba(31, 41, 55, 0.6);
+            border-radius: 6px;
+            border-left: 6px solid var(--bttf-naranja);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stats-equipo {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        .ganador {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: var(--bttf-amarillo);
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+            margin: 25px 0;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="pantalla-inicio" class="pantalla activa">
+            <div class="zona-imagen">
+                <i class="fa-solid fa-car-rear"></i>
+                <img src="./resources/imagen_intro.png" alt="Regreso al Futuro" onerror="this.style.display='none'">
+            </div>
+            <h1>REGRESO AL FUTURO</h1>
+            <h2>El Enigma de los Datos Temporales</h2>
+
+            <div class="config-seccion">
+               <h3><i class="fa-solid fa-clock-rotate-left"></i> Directivas de la Paradoja Estadística</h3>
+               <ul>
+                 <li><b>Glosario Temporal Obligatorio:</b> Para calibrar el condensador de fluzo, recuerda la nomenclatura base de las líneas temporales:
+                    <br>&bull; <b style="color:var(--bttf-azul);">N</b> = Tamaño total de la población bajo estudio histórico.
+                    <br>&bull; <b style="color:var(--bttf-azul);">n<sub>i</sub></b> = Frecuencia absoluta del evento en la época.
+                    <br>&bull; <b style="color:var(--bttf-azul);">N<sub>i</sub></b> = Frecuencia absoluta acumulada hasta el año de destino.
+                    <br>&bull; <b style="color:var(--bttf-azul);">f<sub>i</sub></b> = Frecuencia relativa (proporción espacio-temporal).
+                    <br>&bull; <b style="color:var(--bttf-azul);">F<sub>i</sub></b> = Frecuencia relativa acumulada de la muestra lineal.
+                 </li>
+                 <li><b>Misión:</b> Vincular cada tarjeta de <b>Concepto o Medida Estadística</b> con su correspondiente <b>Fórmula Matemática</b> exacta en datos continuos o generales.</li>
+                 <li><b>Mecánica del Delorean:</b> Al acertar una pareja de datos, la línea temporal se estabiliza (<b>ganas 1 Núcleo de Plutonio y mantienes el control de los circuitos del tiempo</b>). Si fallas, cedes el viaje al siguiente equipo de científicos.</li>
+               </ul>
+            </div>
+          
+            <div class="config-seccion">
+                <h3><i class="fa-solid fa-sliders"></i> Panel de Control del Tablero</h3>
+                <label><b>Límite de Batería de Coche (Tiempo):</b></label>
+                <select id="tiempo-limite">
+                    <option value="10">10 Minutos (Línea estable)</option>
+                    <option value="20">20 Minutos (Línea intermedia)</option>
+                    <option value="30">30 Minutos (Línea crítica)</option>
+                </select>
+                <br><br>
+                <label><b>Equipos de Viajeros Temporales:</b></label>
+                <input type="number" id="num-grupos" min="1" max="6" value="2" onchange="generarInputsGrupos()">
+                <div id="inputs-grupos"></div>
+            </div>
+
+            <button onclick="iniciarJuego()"><i class="fa-solid fa-bolt"></i> ¡Activar Condensador de Fluzo!</button>
+          
+            <div class="config-seccion" style="text-align: center; font-size: 0.85rem; color:#6b7280;">
+              Inspirado en la Trilogía de Regreso al Futuro • Matriz cuántica de 40 elementos descriptivos.<br>
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color: var(--bttf-azul); text-decoration: none;">CC BY-SA 4.0</a>
+            </div>
+        </div>
+
+        <div id="pantalla-juego" class="pantalla">
+            <div class="zona-imagen">
+                <i class="fa-solid fa-bolt"></i>
+                <img src="./resources/imagen_proceso.png" alt="Viaje Temporal en Proceso" onerror="this.style.display='none'">
+            </div>
+            <div class="info-juego">
+                <div id="marcador-turnos">Control de viaje: <span id="grupo-actual" class="turno-actual">-</span></div>
+                <div class="reloj"><i class="fa-regular fa-clock"></i> <span id="cuenta-atras">00:00</span></div>
+                <div id="puntuaciones-vivas"></div>
+            </div>
+            <div class="tablero" id="tablero"></div>
+        </div>
+
+        <div id="pantalla-resultados" class="pantalla">
+            <div class="zona-imagen">
+                <i class="fa-solid fa-trophy"></i>
+                <img src="./resources/imagen_fin.png" alt="Destino Alcanzado" onerror="this.style.display='none'">
+            </div>
+            <h1>¡Destino Alcanzado!</h1>
+            <h2>Continuidad Temporal Asegurada</h2>
+            <div id="ganador-anuncio" class="ganador"></div>
+            <ul id="lista-puntuaciones" class="lista-resultados"></ul>
+            <button onclick="reiniciarJuego()"><i class="fa-solid fa-arrow-rotate-left"></i> Iniciar nueva línea temporal</button>
+        </div>
+    </div>
+
+    <script>
+        // Banco de datos: 20 parejas perfectamente descritas en MathML estructurado sin saltos de linea dañinos
+        const bancoFormulas = [
+            { 
+                nombre: "Media", 
+                expresion: `<math display="block"><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mo>=</mo><mfrac><mrow><mo>&amp;#x2211;</mo><msub><mi>x</mi><mi>i</mi></msub><msub><mi>n</mi><mi>i</mi></msub></mrow><mi>N</mi></mfrac></math>`, 
+                idReal: 1 
+            },
+            { 
+                nombre: "Mediana (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>M</mi><mi>e</mi></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mi>N</mi><2</mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 2 
+            },
+            { 
+                nombre: "Moda (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>M</mi><mi>o</mi></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mi>&amp;#x0394;</mi><msub><mi>n</mi><mi>i</mi></msub></mrow><mrow><mi>&amp;#x0394;</mi><msub><mi>n</mi><mi>i</mi></msub><mo>+</mo><mi>&amp;#x0394;</mi><msub><mi>n</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 3 
+            },
+            { 
+                nombre: "Varianza", 
+                expresion: `<math display="block"><msup><mi>s</mi><mn>2</mn></msup><mo>=</mo><mfrac><mrow><mo>&amp;#x2211;</mo><msubsup><mi>x</mi><mi>i</mi><mn>2</mn></msubsup><msub><mi>n</mi><mi>i</mi></msub></mrow><mi>N</mi></mfrac><mo>-</mo><msup><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mn>2</mn></msup></math>`, 
+                idReal: 4 
+            },
+            { 
+                nombre: "Desviación típica", 
+                expresion: `<math display="block"><mi>s</mi><mo>=</mo><msqrt><msup><mi>s</mi><mn>2</mn></msup></msqrt></math>`, 
+                idReal: 5 
+            },
+            { 
+                nombre: "Cuartil 1 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>Q</mi><mn>1</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mi>N</mi><4</mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 6 
+            },
+            { 
+                nombre: "Cuartil 3 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>Q</mi><mn>3</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>3</mn><mi>N</mi></mrow><4</mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 7 
+            },
+            { 
+                nombre: "Rango o recorrido", 
+                expresion: `<math display="block"><mi>R</mi><mo>=</mo><msub><mi>x</mi><mrow><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>-</mo><msub><mi>x</mi><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></math>`, 
+                idReal: 8 
+            },
+            { 
+                nombre: "Rango intercuartílico", 
+                expresion: `<math display="block"><mi>R</mi><mi>I</mi><mo>=</mo><msub><mi>Q</mi><mn>3</mn></msub><mo>-</mo><msub><mi>Q</mi><mn>1</mn></msub></math>`, 
+                idReal: 9 
+            },
+            { 
+                nombre: "Coeficiente de asimetría (g1)", 
+                expresion: `<math display="block"><msub><mi>g</mi><mn>1</mn></msub><mo>=</mo><mfrac><mrow><mfrac><mn>1</mn><mi>N</mi></mfrac><mo>&amp;#x2211;</mo><msup><mrow><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>-</mo><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mo>)</mo></mrow><mn>3</mn></msup><msub><mi>n</mi><mi>i</mi></msub></mrow><msup><mi>s</mi><mn>3</mn></msup></mfrac></math>`, 
+                idReal: 10 
+            },
+            { 
+                nombre: "Coeficiente de curtosis (g2)", 
+                expresion: `<math display="block"><msub><mi>g</mi><mn>2</mn></msub><mo>=</mo><mfrac><mrow><mfrac><mn>1</mn><mi>N</mi></mfrac><mo>&amp;#x2211;</mo><msup><mrow><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>-</mo><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mo>)</mo></mrow><mn>4</mn></msup><msub><mi>n</mi><mi>i</mi></msub></mrow><msup><mi>s</mi><mn>4</mn></msup></mfrac><mo>-</mo><mn>3</mn></math>`, 
+                idReal: 11 
+            },
+            { 
+                nombre: "Decil 2 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>D</mi><mn>2</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>2</mn><mi>N</mi></mrow><mn>10</mn></mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 12 
+            },
+            { 
+                nombre: "Decil 9 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>D</mi><mn>9</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>9</mn><mi>N</mi></mrow><mn>10</mn></mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 13 
+            },
+            { 
+                nombre: "Percentil 29", 
+                expresion: `<math display="block"><msub><mi>P</mi><mn>29</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>29</mn><mi>N</mi></mrow><mn>100</mn></mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 14 
+            },
+            { 
+                nombre: "Percentil 92 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>P</mi><mn>92</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>92</mn><mi>N</mi></mrow><mn>100</mn></mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 15 
+            },
+            { 
+                nombre: "Covarianza", 
+                expresion: `<math display="block"><msub><mi>s</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><mo>=</mo><mfrac><mrow><mo>&amp;#x2211;</mo><msub><mi>x</mi><mi>i</mi></msub><msub><mi>y</mi><mi>j</mi></msub><msub><mi>n</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><mi>N</mi></mfrac><mo>-</mo><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mover><mi>y</mi><mo>&amp;#x00AF;</mo></mover></math>`, 
+                idReal: 16 
+            },
+            { 
+                nombre: "Coeficiente de Pearson", 
+                expresion: `<math display="block"><mi>r</mi><mo>=</mo><mfrac><msub><mi>s</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><mrow><msub><mi>s</mi><mi>x</mi></msub><mo>&amp;#x2212;</mo><msub><mi>s</mi><mi>y</mi></msub></mrow></mfrac></math>`, 
+                idReal: 17 
+            },
+            { 
+                nombre: "Recta regresión Y sobre X", 
+                expresion: `<math display="block"><mi>y</mi><mo>-</mo><mover><mi>y</mi><mo>&amp;#x00AF;</mo></mover><mo>=</mo><mfrac><msub><mi>s</mi><mrow><mi>x</mi><mi>y</mi></mrow></msub><msubsup><mi>s</mi><mi>x</mi><mn>2</mn></msubsup></mfrac><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mo>)</mo></mrow></math>`, 
+                idReal: 18 
+            },
+            { 
+                nombre: "Coeficiente de variación", 
+                expresion: `<math display="block"><mi>C</mi><mi>V</mi><mo>=</mo><mfrac><mi>s</mi><mrow><mo>|</mo><mover><mi>x</mi><mo>&amp;#x00AF;</mo></mover><mo>|</mo></mrow></mfrac></math>`, 
+                idReal: 19 
+            },
+            { 
+                nombre: "Percentil 80 (Datos continuos)", 
+                expresion: `<math display="block"><msub><mi>P</mi><mn>80</mn></msub><mo>=</mo><msub><mi>L</mi><mi>i</mi></msub><mo>+</mo><mfrac><mrow><mfrac><mrow><mn>80</mn><mi>N</mi></mrow><mn>100</mn></mfrac><mo>-</mo><msub><mi>N</mi><mrow><mi>i</mi><mo>-</mo><mn>1</mn></mrow></msub></mrow><msub><mi>n</mi><mi>i</mi></msub></mfrac><mo>&amp;#x22C5;</mo><msub><mi>a</mi><mi>i</mi></msub></math>`, 
+                idReal: 20 
+            }
+        ];
+
+        // Paleta cibernética e industrial para los equipos temporales
+        const coloresEquipos = ["#00f3ff", "#ff8a00", "#ff2a2a", "#00ff66", "#da70d6", "#ffcc00"];
+        const iconosCartasBack = ["fa-microchip", "fa-atom", "fa-gauge-high", "fa-network-wired", "fa-satellite-dish"];
+
+        let grupos = [];
+        let turnoActual = 0;
+        let cartas = [];
+        let cartasVolteadas = [];
+        let bloqueado = false;
+        let intervaloTemporizador;
+        let tiempoRestanteSegundos = 0;
+        let totalMovimientosFallas = 0; // Para estadísticas adicionales de fin de juego
+
+        window.onload = function() {
+            generarInputsGrupos();
+        };
+
+        function generarInputsGrupos() {
+            const numInput = document.getElementById('num-grupos');
+            const contenedor = document.getElementById('inputs-grupos');
+            
+            if (numInput && contenedor) {
+                const num = parseInt(numInput.value) || 2;
+                contenedor.innerHTML = '';
+                for (let i = 1; i <= num; i++) {
+                    const colorActual = coloresEquipos[(i - 1) % coloresEquipos.length];
+                    contenedor.innerHTML += `
+                    <div style="margin: 5px 0; display: flex; align-items: center;">
+                        <span style="color:${colorActual}; font-size:1.3rem; margin-right:12px; filter: drop-shadow(0 0 5px ${colorActual});"><i class="fa-solid fa-user-astronaut"></i></span>
+                        <label style="color:#e5e7eb; font-size:1rem; min-width: 110px;">Científicos ${i}:</label>
+                        <input type="text" class="nombre-grupo" value="Equipo temporal ${i}" style="flex-grow: 1; max-width: 320px; border-color:${colorActual}">
+                    </div>`;
+                }
+            }
+        }
+
+        function cambiarPantalla(id) {
+            document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+            const p = document.getElementById(id);
+            if(p) p.classList.add('activa');
+        }
+
+        function iniciarJuego() {
+            const inputs = document.querySelectorAll('.nombre-grupo');
+            grupos = [];
+            inputs.forEach((input, index) => {
+                grupos.push({ 
+                    nombre: input.value, 
+                    puntos: 0,
+                    intentos: 0,
+                    fallas: 0,
+                    color: coloresEquipos[index % coloresEquipos.length]
+                });
+            });
+
+            turnoActual = 0;
+            cartasVolteadas = [];
+            bloqueado = false;
+            totalMovimientosFallas = 0;
+
+            const minutosSeleccionados = parseInt(document.getElementById('tiempo-limite').value);
+            tiempoRestanteSegundos = minutosSeleccionados * 60;
+            actualizarRelojGrafico();
+            
+            clearInterval(intervaloTemporizador);
+            intervaloTemporizador = setInterval(controlarTiempo, 1000);
+            
+            actualizarMarcadores();
+            crearTablero();
+            cambiarPantalla('pantalla-juego');
+        }
+
+        function controlarTiempo() {
+            tiempoRestanteSegundos--;
+            actualizarRelojGrafico();
+
+            if (tiempoRestanteSegundos <= 0) {
+                clearInterval(intervaloTemporizador);
+                alert("¡Paradoja temporal crítica! La batería del Delorean se ha agotado por completo.");
+                finalizarJuego();
+            }
+        }
+
+        function actualizarRelojGrafico() {
+            const minutes = Math.floor(tiempoRestanteSegundos / 60);
+            const seconds = tiempoRestanteSegundos % 60;
+            document.getElementById('cuenta-atras').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function crearTablero() {
+            const contenedorTablero = document.getElementById('tablero');
+            contenedorTablero.innerHTML = '';
+
+            let baraja = [];
+            bancoFormulas.forEach((item) => {
+                baraja.push({ id: item.idReal, contenido: item.nombre, tipo: 'nombre' });
+                baraja.push({ id: item.idReal, contenido: item.expresion, tipo: 'expresion' });
+            });
+
+            // Algoritmo de barajado aleatorio cuántico (Fisher-Yates)
+            for (let i = baraja.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [baraja[i], baraja[j]] = [baraja[j], baraja[i]];
+            }
+            cartas = baraja;
+
+            cartas.forEach((carta, index) => {
+                const elementoCarta = document.createElement('div');
+                elementoCarta.classList.add('carta');
+                elementoCarta.dataset.index = index;
+                
+                // Asignamos un icono aleatorio de fondo decorativo para el reverso de la tarjeta
+                const randomIcon = iconosCartasBack[index % iconosCartasBack.length];
+                elementoCarta.innerHTML = `<i class="fa-solid ${randomIcon}"></i>`; 
+                
+                elementoCarta.addEventListener('click', voltearCarta);
+                contenedorTablero.appendChild(elementoCarta);
+            });
+        }
+
+        function voltearCarta() {
+            if (bloqueado) return;
+            const index = this.dataset.index;
+            const cartaSeleccionada = cartas[index];
+
+            if (this.classList.contains('volteada') || this.classList.contains('emparejada')) return;
+
+            this.classList.add('volteada');
+            
+            // Inyectamos el contenido con clases diferenciadas para el renderizado semántico
+            if(cartaSeleccionada.tipo === 'nombre') {
+                this.innerHTML = `<div class="carta-contenido carta-contenido.tipo-nombre">${cartaSeleccionada.contenido}</div>`;
+            } else {
+                this.innerHTML = `<div class="carta-contenido">${cartaSeleccionada.contenido}</div>`;
+            }
+
+            cartasVolteadas.push({ elemento: this, datos: cartaSeleccionada });
+
+            if (cartasVolteadas.length === 2) {
+                grupos[turnoActual].intentos++;
+                comprobarPareja();
+            }
+        }
+
+        function comprobarPareja() {
+            bloqueado = true;
+            const [c1, c2] = cartasVolteadas;
+
+            // Se comprueba si tienen el mismo ID cuántico de fórmula y tipos diferentes (Un nombre y una expresión)
+            if (c1.datos.id === c2.datos.id && c1.datos.tipo !== c2.datos.tipo) {
+                setTimeout(() => {
+                    c1.elemento.classList.add('emparejada');
+                    c2.elemento.classList.add('emparejada');
+                    grupos[turnoActual].puntos++;
+                    cartasVolteadas = [];
+                    bloqueado = false;
+                    actualizarMarcadores();
+                    comprobarFinJuego();
+                }, 600);
+            } else {
+                setTimeout(() => {
+                    grupos[turnoActual].fallas++;
+                    totalMovimientosFallas++;
+                    
+                    c1.elemento.classList.remove('volteada');
+                    c2.elemento.classList.remove('volteada');
+                    
+                    // Restauramos los iconos originales de reverso
+                    const icon1 = iconosCartasBack[parseInt(c1.elemento.dataset.index) % iconosCartasBack.length];
+                    const icon2 = iconosCartasBack[parseInt(c2.elemento.dataset.index) % iconosCartasBack.length];
+                    c1.elemento.innerHTML = `<i class="fa-solid ${icon1}"></i>`;
+                    c2.elemento.innerHTML = `<i class="fa-solid ${icon2}"></i>`;
+                    
+                    cartasVolteadas = [];
+                    bloqueado = false;
+                    
+                    // Cambio de mando en la máquina del tiempo
+                    turnoActual = (turnoActual + 1) % grupos.length;
+                    actualizarMarcadores();
+                }, 1600);
+            }
+        }
+
+        function actualizarMarcadores() {
+            const grupoActivo = grupos[turnoActual];
+            const spanTurno = document.getElementById('grupo-actual');
+            
+            spanTurno.innerText = grupoActivo.nombre;
+            spanTurno.style.backgroundColor = grupoActivo.color;
+            spanTurno.style.boxShadow = `0 0 12px ${grupoActivo.color}`;
+
+            const contenedorPuntos = document.getElementById('puntuaciones-vivas');
+            contenedorPuntos.innerHTML = grupos.map(g => 
+                `<span style="border-bottom: 3px solid ${g.color}; padding-bottom: 2px; margin: 0 10px; display: inline-block; color:#fff;">
+                    ${g.nombre}: <b style="color:${g.color}; font-size:1.2rem;">${g.puntos} núcleos</b>
+                </span>`
+            ).join(' ');
+        }
+
+        function comprobarFinJuego() {
+            const cartasEmparejadas = document.querySelectorAll('.carta.emparejada').length;
+            if (cartasEmparejadas === cartas.length) {
+                clearInterval(intervaloTemporizador);
+                finalizarJuego();
+            }
+        }
+
+        function finalizarJuego() {
+            clearInterval(intervaloTemporizador);
+            // Ordenamos la clasificación en base a los puntos de manera descendente
+            const clasificacion = [...grupos].sort((a, b) => b.puntos - a.puntos);
+            
+            let textoGanador = "";
+            const anuncio = document.getElementById('ganador-anuncio');
+            
+            if (clasificacion.length > 1 && clasificacion[0].puntos === clasificacion[1].puntos) {
+                textoGanador = "⚡ ¡Empate en la línea de tiempo! Paradoja absoluta de científicos.";
+                anuncio.style.color = "var(--bttf-amarillo)";
+                anuncio.style.textShadow = "0 0 10px var(--bttf-naranja)";
+            } else {
+                textoGanador = `¡Línea estabilizada por: ${clasificacion[0].nombre}! 🏆`;
+                anuncio.style.color = clasificacion[0].color;
+                anuncio.style.textShadow = `0 0 15px ${clasificacion[0].color}`;
+            }
+
+            anuncio.innerText = textoGanador;
+
+            // Despliegue pormenorizado de las estadísticas por equipo exigido en los requerimientos
+            const lista = document.getElementById('lista-puntuaciones');
+            lista.innerHTML = '';
+            clasificacion.forEach((g, index) => {
+                // Cálculo de tasa de eficiencia cuántica
+                const efectividad = g.intentos > 0 ? Math.round((g.puntos / g.intentos) * 100) : 0;
+                
+                lista.innerHTML += `
+                <li style="border-left-color:${g.color};">
+                    <div>
+                        <span style="font-family:'Orbitron'; font-size:1.2rem; color:${g.color}; margin-right: 8px;">#${index + 1}</span> 
+                        <b style="color:#fff;">${g.nombre}</b>
+                        <div class="stats-equipo">
+                            Intentos de viaje: ${g.intentos} | Saltos fallidos: ${g.fallas}
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="color:${g.color}; font-weight:bold; font-size:1.2rem;">${g.puntos} Fórmulas</span>
+                        <div class="stats-equipo" style="color:var(--bttf-azul);">Eficiencia: ${efectividad}%</div>
+                    </div>
+                </li>`;
+            });
+
+            cambiarPantalla('pantalla-resultados');
+        }
+
+        function reiniciarJuego() {
+            cambiarPantalla('pantalla-inicio');
+            generarInputsGrupos();
+        }
+    </script>
+</body>
+</html>

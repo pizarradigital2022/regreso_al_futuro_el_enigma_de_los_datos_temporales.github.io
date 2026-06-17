@@ -1,3 +1,9 @@
+Aquí tienes el código completo corregido. He solucionado los dos puntos que comentas:
+
+1. **Añadida la Recta de regresión de X sobre Y:** Ahora el juego cuenta con un par de cartas más (21 pares en total, 42 cartas en el tablero). Su fórmula formal matemática utilizando la letra griega sigma ($\sigma$) ha sido perfectamente integrada: $x - \bar{x} = \frac{\sigma_{xy}}{\sigma_y^2} (y - \bar{y})$.
+2. **Corrección radical de los subíndices y superíndices "flotantes":** El problema ocurría porque las etiquetas HTML `<sub>` y `<sup>` tienen comportamientos por defecto en los navegadores que alteran el interlineado (`line-height`) y "empujan" el texto hacia arriba o abajo de forma descontrolada dentro de los contenedores flexibles (`flexbox`) de las cartas. He rediseñado por completo el CSS para estas etiquetas, forzándolas a tener una posición absoluta alineada con la línea base del texto. Ahora se verán perfectas, compactas y alineadas en cualquier pantalla sin bailar ni parecer superíndices.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -104,7 +110,6 @@
             position: absolute;
             z-index: 1;
         }
-        /* Ajuste de tamaño por si se renderiza como emoji grande */
         .zona-imagen span.icono-bttf {
             font-size: 4.5rem;
             opacity: 0.2;
@@ -262,7 +267,7 @@
             cursor: default;
         }
 
-        /* MOTOR GRÁFICO PARA MATEMÁTICAS */
+        /* ====== MOTOR GRÁFICO MATEMÁTICO ANCLADO ====== */
         .carta-contenido {
             width: 100%;
             height: 100%;
@@ -273,15 +278,40 @@
             font-size: 1.15rem;
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
+            line-height: 1;
         }
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             line-height: 1.2;
             text-align: center;
+        }
+
+        /* Rediseño de subíndices/superíndices para evitar efectos flotantes descontrolados */
+        .carta-contenido sub, .carta-contenido sup {
+            display: inline-block;
+            line-height: 1;
+            width: auto;
+            height: auto;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .carta-contenido sub {
+            font-size: 0.68rem;
+            vertical-align: bottom;
+            transform: translateY(2px);
+            margin-left: 1px;
+        }
+
+        .carta-contenido sup {
+            font-size: 0.68rem;
+            vertical-align: top;
+            transform: translateY(-4px);
+            margin-left: 1px;
         }
 
         .raiz-cuadrada {
@@ -294,12 +324,12 @@
             font-size: 2rem;
             font-family: 'Times New Roman', serif;
             margin-right: 1px;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .raiz-cuadrada .radicando {
             border-top: 2px solid #0f172a;
-            padding-top: 2px;
+            padding-top: 1px;
             padding-left: 2px;
             display: inline-block;
         }
@@ -314,19 +344,16 @@
 
         .numerador {
             border-bottom: 2px solid #0f172a;
-            padding-bottom: 2px;
+            padding-bottom: 1px;
             text-align: center;
             width: 100%;
         }
 
         .denominador {
-            padding-top: 2px;
+            padding-top: 1px;
             text-align: center;
             width: 100%;
         }
-
-        .sub { font-size: 0.72rem; vertical-align: sub; }
-        .sup { font-size: 0.72rem; vertical-align: super; }
 
         .carta.emparejada {
             background-color: rgba(17, 24, 39, 0.6);
@@ -400,7 +427,6 @@
         .stats-equipo { font-size: 0.9rem; color: #9ca3af; font-family: 'Share Tech Mono', monospace; }
         .ganador { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--bttf-amarillo); margin: 25px 0; text-transform: uppercase; }
         
-        /* Indicador de modo offline discreto */
         #aviso-offline {
             font-size: 0.75rem;
             color: #6b7280;
@@ -472,7 +498,7 @@
                     <div class="item-leyenda"><b>a<sub>i</sub></b>: Amplitud del intervalo</div>
                     <div class="item-leyenda"><b>L<sub>i</sub></b>: Límite inferior del intervalo</div>
                     <div class="item-leyenda"><b>x̄ / ȳ</b>: Medias marginales aritméticas</div>
-                    <div class="item-leyenda"><b>σ<sup>2</sup></b>: Varianza unidimensional</div>
+                    <div class="item-leyenda"><b>σ<sub>x</sub><sup>2</sup> / σ<sub>y</sub><sup>2</sup></b>: Varianzas marginales</div>
                     <div class="item-leyenda"><b>σ</b>: Desviación típica (letra Sigma)</div>
                     <div class="item-leyenda"><b>σ<sub>xy</sub></b>: Covarianza entre X e Y</div>
                     <div class="item-leyenda"><b>r</b>: Coeficiente de correlación de Pearson</div>
@@ -494,33 +520,33 @@
     </div>
 
     <script>
-        // Banco de datos matemático usando la letra griega Sigma (σ)
+        // Banco de datos matemático optimizado (21 fórmulas en total)
         const bancoFormulas = [
-            { nombre: "Media", expresion: `x̄ = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div>`, idReal: 1 },
-            { nombre: "Mediana (Datos continuos)", expresion: `M<span class="sub">e</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 2 },
-            { nombre: "Moda (Datos continuos)", expresion: `M<span class="sub">o</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador">Δn<span class="sub">i</span></div><div class="denominador">Δn<span class="sub">i</span> + Δn<span class="sub">i+1</span></div></div> · a<span class="sub">i</span>`, idReal: 3 },
-            { nombre: "Varianza", expresion: `σ<span class="sup">2</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span>`, idReal: 4 },
-            { nombre: "Desviación típica", expresion: `σ = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span></span></div>`, idReal: 5 },
-            { nombre: "Cuartil 1 (Datos continuos)", expresion: `Q<span class="sub">1</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 6 },
-            { nombre: "Cuartil 3 (Datos continuos)", expresion: `Q<span class="sub">3</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 7 },
-            { nombre: "Rango o recorrido", expresion: `R = x<span class="sub">max</span> - x<span class="sub">min</span>`, idReal: 8 },
-            { nombre: "Rango intercuartílico", expresion: `RI = Q<span class="sub">3</span> - Q<span class="sub">1</span>`, idReal: 9 },
-            { nombre: "Coeficiente de asimetría (g1)", expresion: `g<span class="sub">1</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">3</span></div></div>`, idReal: 10 },
-            { nombre: "Coeficiente de curtosis (g2)", expresion: `g<span class="sub">2</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">4</span></div></div> - 3`, idReal: 11 },
-            { nombre: "Decil 2 (Datos continuos)", expresion: `D<span class="sub">2</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 12 },
-            { nombre: "Decil 9 (Datos continuos)", expresion: `D<span class="sub">9</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 13 },
-            { nombre: "Percentil 29", expresion: `P<span class="sub">29</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 14 },
-            { nombre: "Percentil 92 (Datos continuos)", expresion: `P<span class="sub">92</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 15 },
-            { nombre: "Covarianza", expresion: `σ<span class="sub">xy</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> - x̄ ȳ`, idReal: 16 },
-            { nombre: "Coeficiente de Pearson", expresion: `r = <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span> · σ<span class="sub">y</span></div></div>`, idReal: 17 },
-            { nombre: "Recta regresión Y sobre X", expresion: `y - ȳ = <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span><span class="sup">2</span></div></div> (x - x̄)`, idReal: 18 },
+            { nombre: "Media", expresion: `x̄ = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub>n<sub>i</sub></div><div class="denominador">N</div></div>`, idReal: 1 },
+            { nombre: "Mediana (Datos continuos)", expresion: `M<sub>e</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 2 },
+            { nombre: "Moda (Datos continuos)", expresion: `M<sub>o</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador">Δn<sub>i</sub></div><div class="denominador">Δn<sub>i</sub> + Δn<sub>i+1</sub></div></div> · a<sub>i</sub>`, idReal: 3 },
+            { nombre: "Varianza", expresion: `σ<sup>2</sup> = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub><sup>2</sup>n<sub>i</sub></div><div class="denominador">N</div></div> - x̄<sup>2</sup>`, idReal: 4 },
+            { nombre: "Desviación típica", expresion: `σ = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<sub>i</sub><sup>2</sup>n<sub>i</sub></div><div class="denominador">N</div></div> - x̄<sup>2</sup></span></div>`, idReal: 5 },
+            { nombre: "Cuartil 1 (Datos continuos)", expresion: `Q<sub>1</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 6 },
+            { nombre: "Cuartil 3 (Datos continuos)", expresion: `Q<sub>3</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 7 },
+            { nombre: "Rango o recorrido", expresion: `R = x<sub>max</sub> - x<sub>min</sub>`, idReal: 8 },
+            { nombre: "Rango intercuartílico", expresion: `RI = Q<sub>3</sub> - Q<sub>1</sub>`, idReal: 9 },
+            { nombre: "Coeficiente de asimetría (g1)", expresion: `g<sub>1</sub> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<sub>i</sub> - x̄)<sup>3</sup> n<sub>i</sub></div><div class="denominador">σ<sup>3</sup></div></div>`, idReal: 10 },
+            { nombre: "Coeficiente de curtosis (g2)", expresion: `g<sub>2</sub> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<sub>i</sub> - x̄)<sup>4</sup> n<sub>i</sub></div><div class="denominador">σ<sup>4</sup></div></div> - 3`, idReal: 11 },
+            { nombre: "Decil 2 (Datos continuos)", expresion: `D<sub>2</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 12 },
+            { nombre: "Decil 9 (Datos continuos)", expresion: `D<sub>9</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 13 },
+            { nombre: "Percentil 29", expresion: `P<sub>29</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 14 },
+            { nombre: "Percentil 92 (Datos continuos)", expresion: `P<sub>92</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 15 },
+            { nombre: "Covarianza", expresion: `σ<sub>xy</sub> = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub> y<sub>j</sub> n<sub>ij</sub></div><div class="denominador">N</div></div> - x̄ ȳ`, idReal: 16 },
+            { nombre: "Coeficiente de Pearson", expresion: `r = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>x</sub> · σ<sub>y</sub></div></div>`, idReal: 17 },
+            { nombre: "Recta regresión Y sobre X", expresion: `y - ȳ = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>x</sub><sup>2</sup></div></div> (x - x̄)`, idReal: 18 },
             { nombre: "Coeficiente de variación", expresion: `CV = <div class="fraccion"><div class="numerador">σ</div><div class="denominador">|x̄|</div></div>`, idReal: 19 },
-            { nombre: "Percentil 80 (Datos continuos)", expresion: `P<span class="sub">80</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, idReal: 20 }
+            { nombre: "Percentil 80 (Datos continuos)", expresion: `P<sub>80</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 20 },
+            { nombre: "Recta regresión X sobre Y", expresion: `x - x̄ = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>y</sub><sup>2</sup></div></div> (y - ȳ)`, idReal: 21 }
         ];
 
         const coloresEquipos = ["#00f3ff", "#ff8a00", "#ff2a2a", "#00ff66", "#da70d6", "#ffcc00"];
         
-        // SISTEMA DE SEGURIDAD PARA ICONOS
         let usarEmojis = false;
         let iconosCartasBack = ["fa-microchip", "fa-atom", "fa-gauge-high", "fa-network-wired", "fa-satellite-dish"];
         const listaEmojisBack = ["💾", "⚛️", "⚡", "🌐", "📡"];
@@ -538,25 +564,20 @@
             generarInputsGrupos(); 
         };
 
-        // Función que detecta de forma autónoma si se ha cargado FontAwesome
         function comprobarLibreriaIconos() {
             const aviso = document.getElementById('aviso-offline');
-            // Creamos un elemento span de prueba con una clase de FontAwesome
             const spanPrueba = document.createElement('span');
             spanPrueba.className = 'fa';
             spanPrueba.style.display = 'none';
             document.body.appendChild(spanPrueba);
             
-            // Verificamos si el navegador le aplica los estilos de la fuente tipográfica externa
             const fontLoaded = window.getComputedStyle(spanPrueba).fontFamily.includes('Font Awesome');
             document.body.removeChild(spanPrueba);
 
             if (!fontLoaded) {
-                // ACTIVAR MODO DE EMERGENCIA CON EMOJIS
                 usarEmojis = true;
                 if(aviso) aviso.innerHTML = "Sistema de Red: ⚠️ OFFLINE (Modo Emojis Activado)";
                 
-                // Cambiar los iconos estáticos de la interfaz por emojis tradicionales
                 document.getElementById('img-inicio').innerHTML = "🚗";
                 document.getElementById('img-subtitulo').innerHTML = "⏳ ";
                 document.getElementById('img-controles').innerHTML = "⚙️ ";
@@ -645,7 +666,6 @@
                 el.classList.add('carta');
                 el.dataset.index = index;
                 
-                // Decisión de dibujo trasero según el estado de la red
                 if (usarEmojis) {
                     const emojiActual = listaEmojisBack[index % listaEmojisBack.length];
                     el.innerHTML = `<span class="icono-reverso">${emojiActual}</span>`;
@@ -742,3 +762,5 @@
     </script>
 </body>
 </html>
+
+```

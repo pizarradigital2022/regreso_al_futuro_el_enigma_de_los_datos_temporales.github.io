@@ -39,14 +39,14 @@
             box-sizing: border-box;
         }
 
-        /* DISEÑO MAXIMIZADO SIN LÍMITES: 95% Reales ocupando todo el ancho horizontal */
+        /* CONTENEDOR TOTALMENTE PANDEMÓNICO AL 98% DEL ANCHO DISPONIBLE */
         .container {
             background-color: var(--gris-oscuro);
             border: 3px solid var(--bttf-azul);
             border-radius: 12px;
-            padding: 25px;
-            width: 95%;
-            max-width: 100%; /* Eliminado el tope anterior para que entren las 6 columnas holgadamente */
+            padding: 20px;
+            width: 98%;
+            max-width: 100%;
             box-shadow: var(--neon-glow-azul);
             text-align: center;
             box-sizing: border-box;
@@ -67,14 +67,14 @@
             font-weight: 900;
             color: var(--bttf-naranja);
             text-shadow: 3px 3px 0px #000, var(--neon-glow-naranja);
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin: 0 0 5px 0;
             letter-spacing: 2px;
         }
 
         h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--bttf-azul);
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -83,7 +83,7 @@
 
         .zona-imagen {
             width: 100%;
-            height: 100px;
+            height: 90px;
             background-color: rgba(0,0,0,0.4);
             border: 2px solid #2a364f;
             border-radius: 8px;
@@ -95,7 +95,7 @@
             position: relative;
         }
         .zona-imagen i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: rgba(0, 243, 255, 0.15);
             position: absolute;
             z-index: 1;
@@ -106,8 +106,8 @@
             color: #000;
             font-family: 'Orbitron', sans-serif;
             font-weight: bold;
-            font-size: 1.1rem;
-            padding: 12px 28px;
+            font-size: 1.05rem;
+            padding: 10px 24px;
             border: 2px solid var(--bttf-amarillo);
             border-radius: 6px;
             cursor: pointer;
@@ -127,8 +127,8 @@
             font-family: 'Share Tech Mono', monospace;
             background-color: var(--gris-metal);
             color: #fff;
-            padding: 10px;
-            font-size: 1.1rem;
+            padding: 9px;
+            font-size: 1.05rem;
             border: 2px solid var(--bttf-azul);
             border-radius: 4px;
             margin: 5px;
@@ -150,7 +150,7 @@
             font-family: 'Orbitron', sans-serif;
             color: var(--bttf-amarillo);
             margin-top: 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         #inputs-grupos {
@@ -167,17 +167,17 @@
             background-color: var(--gris-metal);
             border: 2px solid var(--bttf-azul);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 15px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             position: relative;
         }
 
         .turno-actual {
-            padding: 6px 18px;
+            padding: 5px 15px;
             border-radius: 4px;
             border: 2px solid #fff;
             color: #000;
@@ -187,52 +187,52 @@
 
         .reloj {
             background-color: #000;
-            padding: 8px 18px;
+            padding: 6px 15px;
             border: 2px solid var(--bttf-rojo);
             border-radius: 4px;
             font-family: 'Share Tech Mono', monospace;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--bttf-rojo);
             box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
         }
 
-        /* TABLERO ESTRUCTURADO FIJO EN 6 COLUMNAS REALES */
+        /* TABLERO ULTRA COMPACTADO PARA RESISTIR 6 COLUMNAS A ZOOM 100% */
         .tablero {
             display: grid;
             grid-template-columns: repeat(6, 1fr) !important;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 6px; /* Reducido espacio intermedio */
+            margin-top: 15px;
             perspective: 1000px;
         }
 
-        /* Cartas compactas optimizadas para baja densidad horizontal */
+        /* Cartas de dimensiones calibradas al milímetro */
         .carta {
-            height: 75px;
+            height: 68px; /* Altura ideal balanceada */
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
             border: 2px solid #334155;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 2px 2px 0px #000;
             user-select: none;
             box-sizing: border-box;
-            padding: 4px 6px;
-            transition: all 0.2s ease;
+            padding: 3px 4px; /* Ajuste interno crítico */
+            transition: all 0.15s ease;
         }
 
         .carta i {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--bttf-naranja);
-            filter: drop-shadow(0px 0px 4px rgba(255,138,0,0.5));
+            filter: drop-shadow(0px 0px 3px rgba(255,138,0,0.5));
         }
 
         .carta:hover {
             border-color: var(--bttf-azul);
-            box-shadow: 0px 0px 10px var(--bttf-azul);
+            box-shadow: 0px 0px 8px var(--bttf-azul);
             transform: scale(1.02);
         }
 
@@ -240,11 +240,11 @@
             background-color: #f8fafc;
             background-image: none;
             border-color: #fff;
-            box-shadow: 0px 0px 15px rgba(255,255,255,0.2);
+            box-shadow: 0px 0px 12px rgba(255,255,255,0.2);
             cursor: default;
         }
 
-        /* ====== MOTOR GRÁFICO MATEMÁTICO ADAPTADO ====== */
+        /* ====== MOTOR GRÁFICO MATEMÁTICO COMPACTO ====== */
         .carta-contenido {
             width: 100%;
             height: 100%;
@@ -252,7 +252,7 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 0.9rem; /* Reducido para encajar perfectamente a zoom 0 en 6 columnas */
+            font-size: 0.85rem; /* Ajustado para prevenir el quiebre de columnas en zoom 100% */
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             white-space: nowrap;
@@ -260,9 +260,9 @@
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.75rem;
+            font-size: 0.7rem; /* Texto de nombres ligeramente menor para no empujar bordes */
             text-transform: uppercase;
-            letter-spacing: 0px;
+            letter-spacing: -0.2px;
             line-height: 1.1;
             text-align: center;
             white-space: normal;
@@ -272,7 +272,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 1px;
         }
 
         .variable-barra {
@@ -280,7 +280,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            line-height: 0.8;
+            line-height: 0.75;
             padding: 0 1px;
         }
         .barra-sup {
@@ -296,7 +296,7 @@
         }
 
         .raiz-cuadrada .simbolo {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-family: 'Times New Roman', serif;
             margin-right: 1px;
             transform: translateY(-1px);
@@ -314,8 +314,8 @@
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 2px;
-            line-height: 1.0;
+            padding: 0 1px;
+            line-height: 0.95;
         }
 
         .numerador {
@@ -331,14 +331,13 @@
             width: 100%;
         }
 
-        .sub { font-size: 0.65rem; vertical-align: sub; }
-        .sup { font-size: 0.65rem; vertical-align: super; }
-        .sub-leyenda { font-size: 0.75rem; vertical-align: sub; }
+        .sub { font-size: 0.6rem; vertical-align: sub; }
+        .sup { font-size: 0.6rem; vertical-align: super; }
 
         .carta.emparejada {
             background-color: rgba(17, 24, 39, 0.6);
             background-image: none;
-            border: 2px dashed rgba(0, 243, 255, 0.2);
+            border: 2px dashed rgba(0, 243, 255, 0.15);
             box-shadow: none;
             pointer-events: none;
         }
@@ -349,8 +348,8 @@
             background-color: var(--gris-metal);
             color: var(--bttf-azul);
             border: 2px solid var(--bttf-azul);
-            font-size: 0.9rem;
-            padding: 8px 15px;
+            font-size: 0.85rem;
+            padding: 6px 12px;
             box-shadow: none;
         }
         .btn-leyenda:hover {
@@ -520,7 +519,6 @@
 
         window.onload = function() { generarInputsGrupos(); };
 
-        /* FUNCIONES DE LA VENTANA EMERGENTE (MODAL LEYENDA) */
         function abrirLeyenda() { document.getElementById('modal-leyenda').style.display = 'flex'; }
         function cerrarLeyenda() { document.getElementById('modal-leyenda').style.display = 'none'; }
 
@@ -631,7 +629,7 @@
             const span = document.getElementById('grupo-actual');
             span.innerText = g.nombre; span.style.backgroundColor = g.color;
             document.getElementById('puntuaciones-vivas').innerHTML = grupos.map(x => 
-                `<span style="border-bottom:3px solid ${x.color}; margin:0 10px; color:#fff; display:inline-block; padding-bottom:2px;">${x.nombre}: <b>${x.puntos}</b></span>`
+                `<span style="border-bottom:3px solid ${x.color}; margin:0 8px; color:#fff; display:inline-block; padding-bottom:2px; font-size:0.95rem;">${x.nombre}: <b>${x.puntos}</b></span>`
             ).join('');
         }
 

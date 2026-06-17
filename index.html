@@ -270,7 +270,23 @@
             white-space: normal; /* El texto normal sí se puede autoajustar */
         }
 
-        /* Raíces Cuadradas Avanzadas (Alineación impecable con fracciones internas) */
+        /* Contenedor específico para variables con barra (Media) */
+        .variable-barra {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            line-height: 1;
+            padding: 0 2px;
+        }
+        .barra-sup {
+            border-top: 2px solid #0f172a;
+            width: 100%;
+            height: 0;
+            margin-bottom: 2px;
+        }
+
+        /* Raíces Cuadradas Avanzadas */
         .raiz-cuadrada {
             display: inline-flex;
             align-items: center;
@@ -361,7 +377,7 @@
                <h3><i class="fa-solid fa-clock-rotate-left"></i> Directivas de la Paradoja Estadística</h3>
                <ul>
                  <li><b>Glosario Temporal Base:</b> N (Población), n<span class="sub-leyenda">i</span> (Frecuencia absoluta), N<span class="sub-leyenda">i</span> (Absoluta acumulada), f<span class="sub-leyenda">i</span> (Relativa), F<span class="sub-leyenda">i</span> (Relativa acumulada).</li>
-                 <li><b>Medias Marginales:</b> x<span class="sup">_</span> / y<span class="sup">_</span> (Medias marginales aritméticas).</li>
+                 <li><b>Medias Marginales:</b> <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>x</div> / <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>y</div> (Medias marginales aritméticas).</li>
                  <li><b>Objetivo:</b> Emparejar los conceptos textuales estadísticos con su modelo matemático CSS exacto. Los aciertos otorgan núcleos de plutonio.</li>
                </ul>
             </div>
@@ -411,7 +427,7 @@
         const bancoFormulas = [
             { 
                 nombre: "Media", 
-                expresion: `x̄ = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div>`, 
+                expresion: `<div class="variable-barra"><div class="barra-sup"></div>x</div> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div>`, 
                 idReal: 1 
             },
             { 
@@ -426,12 +442,12 @@
             },
             { 
                 nombre: "Varianza", 
-                expresion: `s<span class="sup">2</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span>`, 
+                expresion: `s<span class="sup">2</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span>`, 
                 idReal: 4 
             },
             { 
                 nombre: "Desviación típica", 
-                expresion: `s = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span></span></div>`, 
+                expresion: `s = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span></span></div>`, 
                 idReal: 5 
             },
             { 
@@ -456,12 +472,12 @@
             },
             { 
                 nombre: "Coeficiente de asimetría (g1)", 
-                expresion: `g<span class="sub">1</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">3</span></div></div>`, 
+                expresion: `g<span class="sub">1</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">3</span></div></div>`, 
                 idReal: 10 
             },
             { 
                 nombre: "Coeficiente de curtosis (g2)", 
-                expresion: `g<span class="sub">2</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">4</span></div></div> - 3`, 
+                expresion: `g<span class="sub">2</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">4</span></div></div> - 3`, 
                 idReal: 11 
             },
             { 
@@ -486,7 +502,7 @@
             },
             { 
                 nombre: "Covarianza", 
-                expresion: `s<span class="sub">xy</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> - x̄ ȳ`, 
+                expresion: `s<span class="sub">xy</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> - <div class="variable-barra"><div class="barra-sup"></div>x</div> <div class="variable-barra"><div class="barra-sup"></div>y</div>`, 
                 idReal: 16 
             },
             { 
@@ -496,12 +512,12 @@
             },
             { 
                 nombre: "Recta regresión Y sobre X", 
-                expresion: `y - ȳ = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">x</span><span class="sup">2</span></div></div> (x - x̄)`, 
+                expresion: `y - <div class="variable-barra"><div class="barra-sup"></div>y</div> = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">x</span><span class="sup">2</span></div></div> (x - <div class="variable-barra"><div class="barra-sup"></div>x</div>)`, 
                 idReal: 18 
             },
             { 
                 nombre: "Coeficiente de variación", 
-                expresion: `CV = <div class="fraccion"><div class="numerador">s</div><div class="denominador">|x̄|</div></div>`, 
+                expresion: `CV = <div class="fraccion"><div class="numerador">s</div><div class="denominador">|<div class="variable-barra"><div class="barra-sup"></div>x</div>|</div></div>`, 
                 idReal: 19 
             },
             { 
@@ -511,7 +527,7 @@
             },
             { 
                 nombre: "Recta regresión X sobre Y", 
-                expresion: `x - x̄ = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">y</span><span class="sup">2</span></div></div> (y - ȳ)`, 
+                expresion: `x - <div class="variable-barra"><div class="barra-sup"></div>x</div> = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">y</span><span class="sup">2</span></div></div> (y - <div class="variable-barra"><div class="barra-sup"></div>y</div>)`, 
                 idReal: 21 
             }
         ];

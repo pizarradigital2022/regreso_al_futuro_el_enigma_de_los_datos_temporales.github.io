@@ -38,23 +38,17 @@
             min-height: 100vh;
         }
 
-        /* Contenedor adaptativo */
         .container {
             background-color: var(--gris-oscuro);
             border: 3px solid var(--bttf-azul);
             border-radius: 12px;
             padding: 30px;
             width: 100%;
-            max-width: 800px;
+            max-width: 1200px;
             box-shadow: var(--neon-glow-azul);
             text-align: center;
             box-sizing: border-box;
             position: relative;
-            transition: max-width 0.4s ease-in-out;
-        }
-
-        .container.modo-panoramico {
-            max-width: 95%;
         }
 
         .container::before {
@@ -87,7 +81,7 @@
 
         .zona-imagen {
             width: 100%;
-            height: 140px;
+            height: 180px;
             background-color: rgba(0,0,0,0.4);
             border: 2px solid #2a364f;
             border-radius: 8px;
@@ -98,15 +92,11 @@
             overflow: hidden;
             position: relative;
         }
-        .zona-imagen .icono-bttf {
-            font-size: 3.5rem;
+        .zona-imagen i {
+            font-size: 4rem;
             color: rgba(0, 243, 255, 0.15);
             position: absolute;
             z-index: 1;
-        }
-        .zona-imagen span.icono-bttf {
-            font-size: 4.5rem;
-            opacity: 0.2;
         }
 
         button, select {
@@ -206,21 +196,20 @@
             box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
         }
 
-        /* TABLERO OPTIMIZADO PANORÁMICO */
+        /* TABLERO INTERACTIVO: 2 COLUMNAS ANCHAS PARA EVITAR SALTOS DE LÍNEA */
         .tablero {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
             margin-top: 20px;
             perspective: 1000px;
         }
 
-        @media (max-width: 1200px) { .tablero { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 800px) { .tablero { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 500px) { .tablero { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .tablero { grid-template-columns: repeat(1, 1fr); } }
 
+        /* Cartas rectangulares alargadas */
         .carta {
-            height: 120px;
+            height: 90px;
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
@@ -233,24 +222,20 @@
             box-shadow: 3px 3px 0px #000;
             user-select: none;
             box-sizing: border-box;
-            padding: 8px;
+            padding: 10px 20px;
             transition: all 0.2s ease;
         }
 
-        .carta .icono-reverso {
+        .carta i {
             font-size: 2.2rem;
             color: var(--bttf-naranja);
             filter: drop-shadow(0px 0px 4px rgba(255,138,0,0.5));
-        }
-        .carta span.icono-reverso {
-            font-size: 2.5rem;
-            filter: none;
         }
 
         .carta:hover {
             border-color: var(--bttf-azul);
             box-shadow: 0px 0px 10px var(--bttf-azul);
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
 
         .carta.volteada {
@@ -261,7 +246,7 @@
             cursor: default;
         }
 
-        /* ====== MOTOR GRÁFICO MATEMÁTICO ANCLADO ====== */
+        /* ====== MOTOR GRÁFICO PARA MATEMÁTICAS (SISTEMA PROPIO CSS REFINADO) ====== */
         .carta-contenido {
             width: 100%;
             height: 100%;
@@ -269,45 +254,23 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
-            line-height: 1;
+            white-space: nowrap; /* Impide saltos de línea dentro de las fórmulas matemáticas */
         }
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.85rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-            line-height: 1.2;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
             text-align: center;
+            white-space: normal; /* El texto normal sí se puede autoajustar */
         }
 
-        /* Rediseño de subíndices/superíndices para evitar efectos flotantes descontrolados */
-        .carta-contenido sub, .carta-contenido sup {
-            display: inline-block;
-            line-height: 1;
-            width: auto;
-            height: auto;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .carta-contenido sub {
-            font-size: 0.68rem;
-            vertical-align: bottom;
-            transform: translateY(2px);
-            margin-left: 1px;
-        }
-
-        .carta-contenido sup {
-            font-size: 0.68rem;
-            vertical-align: top;
-            transform: translateY(-4px);
-            margin-left: 1px;
-        }
-
+        /* Raíces Cuadradas Avanzadas (Alineación impecable con fracciones internas) */
         .raiz-cuadrada {
             display: inline-flex;
             align-items: center;
@@ -318,36 +281,42 @@
             font-size: 2rem;
             font-family: 'Times New Roman', serif;
             margin-right: 1px;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
         .raiz-cuadrada .radicando {
             border-top: 2px solid #0f172a;
-            padding-top: 1px;
+            padding-top: 2px;
             padding-left: 2px;
             display: inline-block;
         }
 
+        /* Estructura para Fracciones */
         .fraccion {
             display: inline-flex;
             flex-direction: column;
             vertical-align: middle;
             align-items: center;
-            padding: 0 4px;
+            padding: 0 5px;
         }
 
         .numerador {
             border-bottom: 2px solid #0f172a;
-            padding-bottom: 1px;
+            padding-bottom: 2px;
             text-align: center;
             width: 100%;
         }
 
         .denominador {
-            padding-top: 1px;
+            padding-top: 2px;
             text-align: center;
             width: 100%;
         }
+
+        .sub { font-size: 0.75rem; vertical-align: sub; }
+        .sup { font-size: 0.75rem; vertical-align: super; }
+        .sub-leyenda { font-size: 0.85rem; vertical-align: sub; }
+        /* ================================================================= */
 
         .carta.emparejada {
             background-color: rgba(17, 24, 39, 0.6);
@@ -357,51 +326,6 @@
             pointer-events: none;
         }
         .carta.emparejada * { visibility: hidden; }
-
-        /* SISTEMA DE LEYENDA */
-        .boton-leyenda {
-            margin-top: 30px;
-            background-color: transparent;
-            color: var(--bttf-azul);
-            border: 2px solid var(--bttf-azul);
-            box-shadow: none;
-            font-size: 0.95rem;
-            padding: 8px 20px;
-        }
-        .boton-leyenda:hover {
-            background-color: rgba(0, 243, 255, 0.1);
-            color: #fff;
-            box-shadow: var(--neon-glow-azul);
-        }
-
-        .panel-leyenda {
-            display: none;
-            margin-top: 15px;
-            background-color: #0b1322;
-            border: 2px dashed rgba(0, 243, 255, 0.4);
-            border-radius: 6px;
-            padding: 20px;
-            text-align: left;
-            animation: fadeIn 0.3s ease;
-        }
-        .panel-leyenda.abierto { display: block; }
-
-        .grid-leyenda {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.95rem;
-        }
-        @media (max-width: 900px) { .grid-leyenda { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .grid-leyenda { grid-template-columns: repeat(1, 1fr); } }
-
-        .item-leyenda b { color: var(--bttf-amarillo); font-size: 1.1rem; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
         .lista-resultados {
             list-style: none;
@@ -420,36 +344,30 @@
 
         .stats-equipo { font-size: 0.9rem; color: #9ca3af; font-family: 'Share Tech Mono', monospace; }
         .ganador { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--bttf-amarillo); margin: 25px 0; text-transform: uppercase; }
-        
-        #aviso-offline {
-            font-size: 0.75rem;
-            color: #6b7280;
-            font-family: 'Share Tech Mono', monospace;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
 
-    <div id="contenedor-principal" class="container">
+    <div class="container">
         
         <div id="pantalla-inicio" class="pantalla activa">
             <div class="zona-imagen">
-                <span id="img-inicio" class="icono-bttf"><i class="fa-solid fa-car-rear"></i></span>
+                <i class="fa-solid fa-car-rear"></i>
             </div>
             <h1>REGRESO AL FUTURO</h1>
             <h2>El Enigma de los Datos Temporales (4x10)</h2>
 
             <div class="config-seccion">
-               <h3><span id="img-subtitulo"><i class="fa-solid fa-clock-rotate-left"></i></span> Directivas de la Paradoja Estadística</h3>
+               <h3><i class="fa-solid fa-clock-rotate-left"></i> Directivas de la Paradoja Estadística</h3>
                <ul>
-                 <li><b>Glosario Temporal Base:</b> N (Población), n<sub>i</sub> (Frecuencia absoluta), N<sub>i</sub> (Absoluta acumulada), f<sub>i</sub> (Relativa), F<sub>i</sub> (Relativa acumulada).</li>
-                 <li><b>Objetivo:</b> Emparejar los conceptos estadísticos con su fórmula exacta. Los aciertos otorgan núcleos de plutonio.</li>
+                 <li><b>Glosario Temporal Base:</b> N (Población), n<span class="sub-leyenda">i</span> (Frecuencia absoluta), N<span class="sub-leyenda">i</span> (Absoluta acumulada), f<span class="sub-leyenda">i</span> (Relativa), F<span class="sub-leyenda">i</span> (Relativa acumulada).</li>
+                 <li><b>Medias Marginales:</b> x<span class="sup">_</span> / y<span class="sup">_</span> (Medias marginales aritméticas).</li>
+                 <li><b>Objetivo:</b> Emparejar los conceptos textuales estadísticos con su modelo matemático CSS exacto. Los aciertos otorgan núcleos de plutonio.</li>
                </ul>
             </div>
           
             <div class="config-seccion">
-                <h3><span id="img-controles"><i class="fa-solid fa-sliders"></i></span> Panel de Control del Tablero</h3>
+                <h3><i class="fa-solid fa-sliders"></i> Panel de Control del Tablero</h3>
                 <label><b>Límite de Batería (Tiempo):</b></label>
                 <select id="tiempo-limite">
                     <option value="10">10 Minutos</option>
@@ -462,88 +380,144 @@
                 <div id="inputs-grupos"></div>
             </div>
 
-            <button onclick="iniciarJuego()"><span id="img-boton-jugar"><i class="fa-solid fa-bolt"></i></span> ¡Activar Condensador de Fluzo!</button>
-            <div id="aviso-offline">Sistema de Red: Verificando...</div>
+            <button onclick="iniciarJuego()"><i class="fa-solid fa-bolt"></i> ¡Activar Condensador de Fluzo!</button>
         </div>
 
         <div id="pantalla-juego" class="pantalla">
             <div class="zona-imagen">
-                <span id="img-juego" class="icono-bttf"><i class="fa-solid fa-bolt"></i></span>
+                <i class="fa-solid fa-bolt"></i>
             </div>
             <div class="info-juego">
                 <div>Viaje en curso: <span id="grupo-actual" class="turno-actual">-</span></div>
-                <div class="reloj"><span id="img-reloj"><i class="fa-regular fa-clock"></i></span> <span id="cuenta-atras">00:00</span></div>
+                <div class="reloj"><i class="fa-regular fa-clock"></i> <span id="cuenta-atras">00:00</span></div>
                 <div id="puntuaciones-vivas"></div>
             </div>
-            
             <div class="tablero" id="tablero"></div>
-
-            <button class="boton-leyenda" onclick="alternarLeyenda()">
-                <span id="img-leyenda"><i class="fa-solid fa-terminal"></i></span> Mostrar Leyenda de Símbolos Temporales
-            </button>
-            <div id="panel-leyenda" class="panel-leyenda">
-                <div class="grid-leyenda">
-                    <div class="item-leyenda"><b>N</b>: Población total</div>
-                    <div class="item-leyenda"><b>x<sub>i</sub> / y<sub>j</sub></b>: Valores de las variables</div>
-                    <div class="item-leyenda"><b>n<sub>i</sub> / n<sub>ij</sub></b>: Frecuencia absoluta</div>
-                    <div class="item-leyenda"><b>N<sub>i</sub></b>: Frecuencia absoluta acumulada</div>
-                    <div class="item-leyenda"><b>f<sub>i</sub></b>: Frecuencia relativa</div>
-                    <div class="item-leyenda"><b>F<sub>i</sub></b>: Frecuencia relativa acumulada</div>
-                    <div class="item-leyenda"><b>a<sub>i</sub></b>: Amplitud del intervalo</div>
-                    <div class="item-leyenda"><b>L<sub>i</sub></b>: Límite inferior del intervalo</div>
-                    <div class="item-leyenda"><b>x̄ / ȳ</b>: Medias marginales aritméticas</div>
-                    <div class="item-leyenda"><b>σ<sub>x</sub><sup>2</sup> / σ<sub>y</sub><sup>2</sup></b>: Varianzas marginales</div>
-                    <div class="item-leyenda"><b>σ</b>: Desviación típica (letra Sigma)</div>
-                    <div class="item-leyenda"><b>σ<sub>xy</sub></b>: Covarianza entre X e Y</div>
-                    <div class="item-leyenda"><b>r</b>: Coeficiente de correlación de Pearson</div>
-                    <div class="item-leyenda"><b>R / RI</b>: Rango / Rango intercuartílico</div>
-                </div>
-            </div>
         </div>
 
         <div id="pantalla-resultados" class="pantalla">
             <div class="zona-imagen">
-                <span id="img-resultados" class="icono-bttf"><i class="fa-solid fa-trophy"></i></span>
+                <i class="fa-solid fa-trophy"></i>
             </div>
             <h1>¡Destino Alcanzado!</h1>
             <h2>Continuidad Temporal Asegurada</h2>
             <div id="ganador-anuncio" class="ganador"></div>
             <ul id="lista-puntuaciones" class="lista-resultados"></ul>
-            <button onclick="reiniciarJuego()"><span id="img-boton-restart"><i class="fa-solid fa-arrow-rotate-left"></i></span> Otra línea temporal</button>
+            <button onclick="reiniciarJuego()"><i class="fa-solid fa-arrow-rotate-left"></i> Otra línea temporal</button>
         </div>
     </div>
 
     <script>
-        // Banco de datos matemático optimizado (21 fórmulas en total)
         const bancoFormulas = [
-            { nombre: "Media", expresion: `x̄ = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub>n<sub>i</sub></div><div class="denominador">N</div></div>`, idReal: 1 },
-            { nombre: "Mediana (Datos continuos)", expresion: `M<sub>e</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 2 },
-            { nombre: "Moda (Datos continuos)", expresion: `M<sub>o</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador">Δn<sub>i</sub></div><div class="denominador">Δn<sub>i</sub> + Δn<sub>i+1</sub></div></div> · a<sub>i</sub>`, idReal: 3 },
-            { nombre: "Varianza", expresion: `σ<sup>2</sup> = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub><sup>2</sup>n<sub>i</sub></div><div class="denominador">N</div></div> - x̄<sup>2</sup>`, idReal: 4 },
-            { nombre: "Desviación típica", expresion: `σ = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<sub>i</sub><sup>2</sup>n<sub>i</sub></div><div class="denominador">N</div></div> - x̄<sup>2</sup></span></div>`, idReal: 5 },
-            { nombre: "Cuartil 1 (Datos continuos)", expresion: `Q<sub>1</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 6 },
-            { nombre: "Cuartil 3 (Datos continuos)", expresion: `Q<sub>3</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 7 },
-            { nombre: "Rango o recorrido", expresion: `R = x<sub>max</sub> - x<sub>min</sub>`, idReal: 8 },
-            { nombre: "Rango intercuartílico", expresion: `RI = Q<sub>3</sub> - Q<sub>1</sub>`, idReal: 9 },
-            { nombre: "Coeficiente de asimetría (g1)", expresion: `g<sub>1</sub> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<sub>i</sub> - x̄)<sup>3</sup> n<sub>i</sub></div><div class="denominador">σ<sup>3</sup></div></div>`, idReal: 10 },
-            { nombre: "Coeficiente de curtosis (g2)", expresion: `g<sub>2</sub> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<sub>i</sub> - x̄)<sup>4</sup> n<sub>i</sub></div><div class="denominador">σ<sup>4</sup></div></div> - 3`, idReal: 11 },
-            { nombre: "Decil 2 (Datos continuos)", expresion: `D<sub>2</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 12 },
-            { nombre: "Decil 9 (Datos continuos)", expresion: `D<sub>9</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 13 },
-            { nombre: "Percentil 29", expresion: `P<sub>29</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 14 },
-            { nombre: "Percentil 92 (Datos continuos)", expresion: `P<sub>92</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 15 },
-            { nombre: "Covarianza", expresion: `σ<sub>xy</sub> = <div class="fraccion"><div class="numerador">∑ x<sub>i</sub> y<sub>j</sub> n<sub>ij</sub></div><div class="denominador">N</div></div> - x̄ ȳ`, idReal: 16 },
-            { nombre: "Coeficiente de Pearson", expresion: `r = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>x</sub> · σ<sub>y</sub></div></div>`, idReal: 17 },
-            { nombre: "Recta regresión Y sobre X", expresion: `y - ȳ = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>x</sub><sup>2</sup></div></div> (x - x̄)`, idReal: 18 },
-            { nombre: "Coeficiente de variación", expresion: `CV = <div class="fraccion"><div class="numerador">σ</div><div class="denominador">|x̄|</div></div>`, idReal: 19 },
-            { nombre: "Percentil 80 (Datos continuos)", expresion: `P<sub>80</sub> = L<sub>i</sub> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<sub>i-1</sub></div><div class="denominador">n<sub>i</sub></div></div> · a<sub>i</sub>`, idReal: 20 },
-            { nombre: "Recta regresión X sobre Y", expresion: `x - x̄ = <div class="fraccion"><div class="numerador">σ<sub>xy</sub></div><div class="denominador">σ<sub>y</sub><sup>2</sup></div></div> (y - ȳ)`, idReal: 21 }
+            { 
+                nombre: "Media", 
+                expresion: `x̄ = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div>`, 
+                idReal: 1 
+            },
+            { 
+                nombre: "Mediana (Datos continuos)", 
+                expresion: `M<span class="sub">e</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 2 
+            },
+            { 
+                nombre: "Moda (Datos continuos)", 
+                expresion: `M<span class="sub">o</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador">Δn<span class="sub">i</span></div><div class="denominador">Δn<span class="sub">i</span> + Δn<span class="sub">i+1</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 3 
+            },
+            { 
+                nombre: "Varianza", 
+                expresion: `s<span class="sup">2</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span>`, 
+                idReal: 4 
+            },
+            { 
+                nombre: "Desviación típica", 
+                expresion: `s = <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> - x̄<span class="sup">2</span></span></div>`, 
+                idReal: 5 
+            },
+            { 
+                nombre: "Cuartil 1 (Datos continuos)", 
+                expresion: `Q<span class="sub">1</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 6 
+            },
+            { 
+                nombre: "Cuartil 3 (Datos continuos)", 
+                expresion: `Q<span class="sub">3</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 7 
+            },
+            { 
+                nombre: "Rango o recorrido", 
+                expresion: `R = x<span class="sub">max</span> - x<span class="sub">min</span>`, 
+                idReal: 8 
+            },
+            { 
+                nombre: "Rango intercuartílico", 
+                expresion: `RI = Q<span class="sub">3</span> - Q<span class="sub">1</span>`, 
+                idReal: 9 
+            },
+            { 
+                nombre: "Coeficiente de asimetría (g1)", 
+                expresion: `g<span class="sub">1</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">3</span></div></div>`, 
+                idReal: 10 
+            },
+            { 
+                nombre: "Coeficiente de curtosis (g2)", 
+                expresion: `g<span class="sub">2</span> = <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - x̄)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">s<span class="sup">4</span></div></div> - 3`, 
+                idReal: 11 
+            },
+            { 
+                nombre: "Decil 2 (Datos continuos)", 
+                expresion: `D<span class="sub">2</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 12 
+            },
+            { 
+                nombre: "Decil 9 (Datos continuos)", 
+                expresion: `D<span class="sub">9</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 13 
+            },
+            { 
+                nombre: "Percentil 29", 
+                expresion: `P<span class="sub">29</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 14 
+            },
+            { 
+                nombre: "Percentil 92 (Datos continuos)", 
+                expresion: `P<span class="sub">92</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 15 
+            },
+            { 
+                nombre: "Covarianza", 
+                expresion: `s<span class="sub">xy</span> = <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> - x̄ ȳ`, 
+                idReal: 16 
+            },
+            { 
+                nombre: "Coeficiente de Pearson", 
+                expresion: `r = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">x</span> · s<span class="sub">y</span></div></div>`, 
+                idReal: 17 
+            },
+            { 
+                nombre: "Recta regresión Y sobre X", 
+                expresion: `y - ȳ = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">x</span><span class="sup">2</span></div></div> (x - x̄)`, 
+                idReal: 18 
+            },
+            { 
+                nombre: "Coeficiente de variación", 
+                expresion: `CV = <div class="fraccion"><div class="numerador">s</div><div class="denominador">|x̄|</div></div>`, 
+                idReal: 19 
+            },
+            { 
+                nombre: "Percentil 80 (Datos continuos)", 
+                expresion: `P<span class="sub">80</span> = L<span class="sub">i</span> + <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> · a<span class="sub">i</span>`, 
+                idReal: 20 
+            },
+            { 
+                nombre: "Recta regresión X sobre Y", 
+                expresion: `x - x̄ = <div class="fraccion"><div class="numerador">s<span class="sub">xy</span></div><div class="denominador">s<span class="sub">y</span><span class="sup">2</span></div></div> (y - ȳ)`, 
+                idReal: 21 
+            }
         ];
 
         const coloresEquipos = ["#00f3ff", "#ff8a00", "#ff2a2a", "#00ff66", "#da70d6", "#ffcc00"];
-        
-        let usarEmojis = false;
-        let iconosCartasBack = ["fa-microchip", "fa-atom", "fa-gauge-high", "fa-network-wired", "fa-satellite-dish"];
-        const listaEmojisBack = ["💾", "⚛️", "⚡", "🌐", "📡"];
+        const iconosCartasBack = ["fa-microchip", "fa-atom", "fa-gauge-high", "fa-network-wired", "fa-satellite-dish"];
 
         let grupos = [];
         let turnoActual = 0;
@@ -553,38 +527,7 @@
         let intervaloTemporizador;
         let tiempoRestanteSegundos = 0;
 
-        window.onload = function() { 
-            comprobarLibreriaIconos();
-            generarInputsGrupos(); 
-        };
-
-        function comprobarLibreriaIconos() {
-            const aviso = document.getElementById('aviso-offline');
-            const spanPrueba = document.createElement('span');
-            spanPrueba.className = 'fa';
-            spanPrueba.style.display = 'none';
-            document.body.appendChild(spanPrueba);
-            
-            const fontLoaded = window.getComputedStyle(spanPrueba).fontFamily.includes('Font Awesome');
-            document.body.removeChild(spanPrueba);
-
-            if (!fontLoaded) {
-                usarEmojis = true;
-                if(aviso) aviso.innerHTML = "Sistema de Red: ⚠️ OFFLINE (Modo Emojis Activado)";
-                
-                document.getElementById('img-inicio').innerHTML = "🚗";
-                document.getElementById('img-subtitulo').innerHTML = "⏳ ";
-                document.getElementById('img-controles').innerHTML = "⚙️ ";
-                document.getElementById('img-boton-jugar').innerHTML = "⚡ ";
-                document.getElementById('img-juego').innerHTML = "⚡";
-                document.getElementById('img-reloj').innerHTML = "⏰ ";
-                document.getElementById('img-leyenda').innerHTML = "📟 ";
-                document.getElementById('img-resultados').innerHTML = "🏆";
-                document.getElementById('img-boton-restart').innerHTML = "🔄 ";
-            } else {
-                if(aviso) aviso.innerHTML = "Sistema de Red: 🌐 ONLINE (FontAwesome Cargado)";
-            }
-        }
+        window.onload = function() { generarInputsGrupos(); };
 
         function generarInputsGrupos() {
             const numInput = document.getElementById('num-grupos');
@@ -594,10 +537,9 @@
                 contenedor.innerHTML = '';
                 for (let i = 1; i <= num; i++) {
                     const colorActual = coloresEquipos[(i - 1) % coloresEquipos.length];
-                    const iconoPlan = usarEmojis ? "👨‍🚀" : `<i class="fa-solid fa-user-astronaut"></i>`;
                     contenedor.innerHTML += `
                     <div style="margin: 5px 0; display: flex; align-items: center;">
-                        <span style="color:${colorActual}; font-size:1.3rem; margin-right:12px;">${iconoPlan}</span>
+                        <span style="color:${colorActual}; font-size:1.3rem; margin-right:12px;"><i class="fa-solid fa-user-astronaut"></i></span>
                         <input type="text" class="nombre-grupo" value="Equipo ${i}" style="flex-grow:1; max-width:320px; border-color:${colorActual}">
                     </div>`;
                 }
@@ -605,15 +547,8 @@
         }
 
         function cambiarPantalla(id) {
-            const container = document.getElementById('contenedor-principal');
             document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
             document.getElementById(id).classList.add('activa');
-
-            if (id === 'pantalla-juego') {
-                container.classList.add('modo-panoramico');
-            } else {
-                container.classList.remove('modo-panoramico');
-            }
         }
 
         function iniciarJuego() {
@@ -625,8 +560,6 @@
             turnoActual = 0; cartasVolteadas = []; bloqueado = false;
             tiempoRestanteSegundos = parseInt(document.getElementById('tiempo-limite').value) * 60;
             
-            document.getElementById('panel-leyenda').classList.remove('abierto');
-
             clearInterval(intervaloTemporizador);
             intervaloTemporizador = setInterval(() => {
                 tiempoRestanteSegundos--;
@@ -654,20 +587,11 @@
                 [baraja[i], baraja[j]] = [baraja[j], baraja[i]];
             }
             cartas = baraja;
-            
             cartas.forEach((carta, index) => {
                 const el = document.createElement('div');
                 el.classList.add('carta');
                 el.dataset.index = index;
-                
-                if (usarEmojis) {
-                    const emojiActual = listaEmojisBack[index % listaEmojisBack.length];
-                    el.innerHTML = `<span class="icono-reverso">${emojiActual}</span>`;
-                } else {
-                    const iconoActual = iconosCartasBack[index % iconosCartasBack.length];
-                    el.innerHTML = `<i class="fa-solid ${iconoActual} icono-reverso"></i>`;
-                }
-                
+                el.innerHTML = `<i class="fa-solid ${iconosCartasBack[index % iconosCartasBack.length]}"></i>`;
                 el.addEventListener('click', voltearCarta);
                 contenedor.appendChild(el);
             });
@@ -697,18 +621,8 @@
                     setTimeout(() => {
                         grupos[turnoActual].fallas++;
                         c1.elemento.classList.remove('volteada'); c2.elemento.classList.remove('volteada');
-                        
-                        const i1 = parseInt(c1.elemento.dataset.index);
-                        const i2 = parseInt(c2.elemento.dataset.index);
-                        
-                        if (usarEmojis) {
-                            c1.elemento.innerHTML = `<span class="icono-reverso">${listaEmojisBack[i1 % listaEmojisBack.length]}</span>`;
-                            c2.elemento.innerHTML = `<span class="icono-reverso">${listaEmojisBack[i2 % listaEmojisBack.length]}</span>`;
-                        } else {
-                            c1.elemento.innerHTML = `<i class="fa-solid ${iconosCartasBack[i1 % iconosCartasBack.length]} icono-reverso"></i>`;
-                            c2.elemento.innerHTML = `<i class="fa-solid ${iconosCartasBack[i2 % iconosCartasBack.length]} icono-reverso"></i>`;
-                        }
-                        
+                        c1.elemento.innerHTML = `<i class="fa-solid ${iconosCartasBack[parseInt(c1.elemento.dataset.index) % iconosCartasBack.length]}"></i>`;
+                        c2.elemento.innerHTML = `<i class="fa-solid ${iconosCartasBack[parseInt(c2.elemento.dataset.index) % iconosCartasBack.length]}"></i>`;
                         cartasVolteadas = []; bloqueado = false;
                         turnoActual = (turnoActual + 1) % grupos.length;
                         actualizarMarcadores();
@@ -730,14 +644,6 @@
             if (document.querySelectorAll('.carta.emparejada').length === cartas.length) {
                 clearInterval(intervaloTemporizador);
                 finalizarJuego();
-            }
-        }
-
-        function alternarLeyenda() {
-            const panel = document.getElementById('panel-leyenda');
-            panel.classList.toggle('abierto');
-            if(panel.classList.contains('abierto')){
-                setTimeout(() => { panel.scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);
             }
         }
 

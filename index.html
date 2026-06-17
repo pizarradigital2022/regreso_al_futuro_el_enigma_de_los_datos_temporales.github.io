@@ -31,21 +31,22 @@
             background-size: 30px 30px;
             color: #f3f4f6;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        /* DISEÑO MAXIMIZADO: 95% Reales de la pantalla */
+        /* DISEÑO MAXIMIZADO SIN LÍMITES: 95% Reales ocupando todo el ancho horizontal */
         .container {
             background-color: var(--gris-oscuro);
             border: 3px solid var(--bttf-azul);
             border-radius: 12px;
             padding: 25px;
             width: 95%;
-            max-width: 1750px;
+            max-width: 100%; /* Eliminado el tope anterior para que entren las 6 columnas holgadamente */
             box-shadow: var(--neon-glow-azul);
             text-align: center;
             box-sizing: border-box;
@@ -82,7 +83,7 @@
 
         .zona-imagen {
             width: 100%;
-            height: 120px;
+            height: 100px;
             background-color: rgba(0,0,0,0.4);
             border: 2px solid #2a364f;
             border-radius: 8px;
@@ -94,7 +95,7 @@
             position: relative;
         }
         .zona-imagen i {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: rgba(0, 243, 255, 0.15);
             position: absolute;
             z-index: 1;
@@ -152,9 +153,6 @@
             font-size: 1.2rem;
         }
 
-        .config-seccion ul { padding-left: 20px; margin: 10px 0; }
-        .config-seccion li { margin-bottom: 8px; font-size: 1.05rem; line-height: 1.5; }
-
         #inputs-grupos {
             display: flex;
             flex-direction: column;
@@ -175,6 +173,7 @@
             font-size: 1.1rem;
             flex-wrap: wrap;
             gap: 15px;
+            position: relative;
         }
 
         .turno-actual {
@@ -197,23 +196,18 @@
             box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
         }
 
-        /* SEGUNDA PANTALLA: COLA DE GRID FIJA EN 6 COLUMNAS */
+        /* TABLERO ESTRUCTURADO FIJO EN 6 COLUMNAS REALES */
         .tablero {
             display: grid;
-            grid-template-columns: repeat(6, 1fr) !important; /* Forzado estricto */
-            gap: 12px;
+            grid-template-columns: repeat(6, 1fr) !important;
+            gap: 10px;
             margin-top: 20px;
             perspective: 1000px;
         }
 
-        /* Solo se reduce en pantallas ultra-pequeñas de móviles para evitar colapsos de texto */
-        @media (max-width: 600px) { 
-            .tablero { grid-template-columns: repeat(2, 1fr) !important; } 
-        }
-
-        /* Cartas compactas adaptadas a distribución panorámica de 6 columnas */
+        /* Cartas compactas optimizadas para baja densidad horizontal */
         .carta {
-            height: 85px;
+            height: 75px;
             background-color: #1e293b;
             background-image: radial-gradient(var(--bttf-azul) 1px, transparent 0);
             background-size: 10px 10px;
@@ -226,12 +220,12 @@
             box-shadow: 3px 3px 0px #000;
             user-select: none;
             box-sizing: border-box;
-            padding: 5px 8px;
+            padding: 4px 6px;
             transition: all 0.2s ease;
         }
 
         .carta i {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--bttf-naranja);
             filter: drop-shadow(0px 0px 4px rgba(255,138,0,0.5));
         }
@@ -239,7 +233,7 @@
         .carta:hover {
             border-color: var(--bttf-azul);
             box-shadow: 0px 0px 10px var(--bttf-azul);
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
         .carta.volteada {
@@ -250,7 +244,7 @@
             cursor: default;
         }
 
-        /* ====== MOTOR GRÁFICO MATEMÁTICO ALINEADO ====== */
+        /* ====== MOTOR GRÁFICO MATEMÁTICO ADAPTADO ====== */
         .carta-contenido {
             width: 100%;
             height: 100%;
@@ -258,7 +252,7 @@
             align-items: center;
             justify-content: center;
             color: #0f172a;
-            font-size: 1.05rem; 
+            font-size: 0.9rem; /* Reducido para encajar perfectamente a zoom 0 en 6 columnas */
             font-family: 'Times New Roman', Times, serif;
             font-weight: bold;
             white-space: nowrap;
@@ -266,70 +260,66 @@
 
         .carta-contenido.tipo-nombre {
             font-family: 'Urbanist', sans-serif;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
-            line-height: 1.2;
+            letter-spacing: 0px;
+            line-height: 1.1;
             text-align: center;
             white-space: normal;
         }
 
-        /* Bloque flexible para igualar el nivel horizontal de la ecuación */
         .ecuacion-flex {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 2px;
         }
 
-        /* Contenedor específico para variables con barra superior */
         .variable-barra {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
-            line-height: 0.9;
+            line-height: 0.8;
             padding: 0 1px;
         }
         .barra-sup {
-            border-top: 2px solid #0f172a;
+            border-top: 1.5px solid #0f172a;
             width: 110%;
             height: 0;
             margin-bottom: 1px;
         }
 
-        /* Estructura de Raíces */
         .raiz-cuadrada {
             display: inline-flex;
             align-items: center;
         }
 
         .raiz-cuadrada .simbolo {
-            font-size: 1.7rem;
+            font-size: 1.4rem;
             font-family: 'Times New Roman', serif;
             margin-right: 1px;
             transform: translateY(-1px);
         }
 
         .raiz-cuadrada .radicando {
-            border-top: 2px solid #0f172a;
+            border-top: 1.5px solid #0f172a;
             padding-top: 1px;
             padding-left: 1px;
             display: inline-flex;
             align-items: center;
         }
 
-        /* Estructura de Fracciones */
         .fraccion {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 3px;
-            line-height: 1.1;
+            padding: 0 2px;
+            line-height: 1.0;
         }
 
         .numerador {
-            border-bottom: 2px solid #0f172a;
+            border-bottom: 1.5px solid #0f172a;
             padding-bottom: 1px;
             text-align: center;
             width: 100%;
@@ -341,10 +331,9 @@
             width: 100%;
         }
 
-        .sub { font-size: 0.7rem; vertical-align: sub; }
-        .sup { font-size: 0.7rem; vertical-align: super; }
-        .sub-leyenda { font-size: 0.85rem; vertical-align: sub; }
-        /* ================================================================= */
+        .sub { font-size: 0.65rem; vertical-align: sub; }
+        .sup { font-size: 0.65rem; vertical-align: super; }
+        .sub-leyenda { font-size: 0.75rem; vertical-align: sub; }
 
         .carta.emparejada {
             background-color: rgba(17, 24, 39, 0.6);
@@ -355,6 +344,56 @@
         }
         .carta.emparejada * { visibility: hidden; }
 
+        /* ====== VENTANA EMERGENTE (MODAL LEYENDA) ====== */
+        .btn-leyenda {
+            background-color: var(--gris-metal);
+            color: var(--bttf-azul);
+            border: 2px solid var(--bttf-azul);
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            box-shadow: none;
+        }
+        .btn-leyenda:hover {
+            background-color: var(--bttf-azul);
+            color: #000;
+            box-shadow: 0 0 10px var(--bttf-azul);
+        }
+
+        .modal-fondo {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-contenedor {
+            background: var(--gris-oscuro);
+            border: 3px solid var(--bttf-amarillo);
+            border-radius: 10px;
+            padding: 25px;
+            width: 90%;
+            max-width: 650px;
+            text-align: left;
+            box-shadow: 0px 0px 25px var(--bttf-amarillo);
+        }
+        .modal-contenedor h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--bttf-naranja);
+            margin-top: 0;
+            border-bottom: 2px solid #2a364f;
+            padding-bottom: 10px;
+        }
+        .modal-contenedor ul { padding-left: 20px; }
+        .modal-contenedor li { margin-bottom: 12px; font-size: 1.05rem; line-height: 1.4; }
+        .modal-cerrar {
+            margin-top: 15px;
+            float: right;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+        }
+
         .lista-resultados {
             list-style: none;
             padding: 0;
@@ -362,14 +401,12 @@
             max-width: 600px;
             margin: 20px auto;
         }
-        
         .lista-resultados li {
             margin: 12px 0; padding: 15px;
             background: rgba(31, 41, 55, 0.6);
             border-radius: 6px; border-left: 6px solid var(--bttf-naranja);
             display: flex; justify-content: space-between; align-items: center;
         }
-
         .stats-equipo { font-size: 0.9rem; color: #9ca3af; font-family: 'Share Tech Mono', monospace; }
         .ganador { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; color: var(--bttf-amarillo); margin: 25px 0; text-transform: uppercase; }
     </style>
@@ -384,15 +421,6 @@
             </div>
             <h1>REGRESO AL FUTURO</h1>
             <h2>El Enigma de los Datos Temporales (4x10)</h2>
-
-            <div class="config-seccion">
-               <h3><i class="fa-solid fa-clock-rotate-left"></i> Directivas de la Paradoja Estadística</h3>
-               <ul>
-                 <li><b>Glosario Temporal Base:</b> N (Población), n<span class="sub-leyenda">i</span> (Frecuencia absoluta), N<span class="sub-leyenda">i</span> (Absoluta acumulada), f<span class="sub-leyenda">i</span> (Relativa), F<span class="sub-leyenda">i</span> (Relativa acumulada).</li>
-                 <li><b>Medias Marginales:</b> <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>x</div> / <div class="variable-barra" style="color:var(--bttf-azul)"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>y</div> (Medias marginales aritméticas).</li>
-                 <li><b>Parámetros de Dispersión Coeficiente:</b> Notación basada en la letra griega sigma (<b>σ</b>) para desvelar las desviaciones y covarianzas bidimensionales.</li>
-               </ul>
-            </div>
           
             <div class="config-seccion">
                 <h3><i class="fa-solid fa-sliders"></i> Panel de Control del Tablero</h3>
@@ -418,7 +446,8 @@
             <div class="info-juego">
                 <div>Viaje en curso: <span id="grupo-actual" class="turno-actual">-</span></div>
                 <div class="reloj"><i class="fa-regular fa-clock"></i> <span id="cuenta-atras">00:00</span></div>
-                <div id="puntuaciones-vivas"></div>
+                <button class="btn-leyenda" onclick="abrirLeyenda()"><i class="fa-solid fa-book-open"></i> Ver Directivas</button>
+                <div id="puntuaciones-vivas" style="width: 100%; margin-top: 10px;"></div>
             </div>
             <div class="tablero" id="tablero"></div>
         </div>
@@ -435,113 +464,47 @@
         </div>
     </div>
 
+    <div id="modal-leyenda" class="modal-fondo">
+        <div class="modal-contenedor">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Directivas de la Paradoja Estadística</h3>
+            <ul>
+                <li><b>Glosario Temporal Base:</b><br>
+                    • <b>N</b> = Población total.<br>
+                    • <b>n<sub>i</sub></b> = Frecuencia absoluta.<br>
+                    • <b>N<sub>i</sub></b> = Frecuencia absoluta acumulada.<br>
+                    • <b>f<sub>i</sub></b> = Frecuencia relativa.<br>
+                    • <b>F<sub>i</sub></b> = Frecuencia relativa acumulada.
+                </li>
+                <li><b>Medias Marginales:</b> Arreglos calculados con barra superior de nivelación horizontal (<div class="variable-barra" style="color:var(--bttf-azul); font-family:serif;"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>x</div> / <div class="variable-barra" style="color:var(--bttf-azul); font-family:serif;"><div class="barra-sup" style="border-color:var(--bttf-azul)"></div>y</div>) que representan las medias aritméticas de cada variable.</li>
+                <li><b>Parámetros de Dispersión Coeficiente:</b> Toda la notación bidimensional está unificada rigurosamente bajo la letra griega sigma (<b>σ</b>) para variables, desviaciones típicas y covarianzas temporales, descartando el uso de la letra 's'.</li>
+            </ul>
+            <button class="modal-cerrar" onclick="cerrarLeyenda()">Entendido</button>
+        </div>
+    </div>
+
     <script>
         const bancoFormulas = [
-            { 
-                nombre: "Media", 
-                expresion: `<div class="ecuacion-flex"><div class="variable-barra"><div class="barra-sup"></div>x</div> <span>=</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div></div>`, 
-                idReal: 1 
-            },
-            { 
-                nombre: "Mediana (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>M<span class="sub">e</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 2 
-            },
-            { 
-                nombre: "Moda (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>M<span class="sub">o</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador">Δn<span class="sub">i</span></div><div class="denominador">Δn<span class="sub">i</span> + Δn<span class="sub">i+1</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 3 
-            },
-            { 
-                nombre: "Varianza", 
-                expresion: `<div class="ecuacion-flex"><span>σ<span class="sup">2</span> =</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span></div>`, 
-                idReal: 4 
-            },
-            { 
-                nombre: "Desviación típica", 
-                expresion: `<div class="ecuacion-flex"><span>σ =</span> <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span></span></div></div>`, 
-                idReal: 5 
-            },
-            { 
-                nombre: "Cuartil 1 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>Q<span class="sub">1</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 6 
-            },
-            { 
-                nombre: "Cuartil 3 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>Q<span class="sub">3</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 7 
-            },
-            { 
-                nombre: "Rango o recorrido", 
-                expresion: `<div class="ecuacion-flex"><span>R = x<span class="sub">max</span> - x<span class="sub">min</span></span></div>`, 
-                idReal: 8 
-            },
-            { 
-                nombre: "Rango intercuartílico", 
-                expresion: `<div class="ecuacion-flex"><span>RI = Q<span class="sub">3</span> - Q<span class="sub">1</span></span></div>`, 
-                idReal: 9 
-            },
-            { 
-                nombre: "Coeficiente de asimetría (g1)", 
-                expresion: `<div class="ecuacion-flex"><span>g<span class="sub">1</span> =</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">3</span></div></div></div>`, 
-                idReal: 10 
-            },
-            { 
-                nombre: "Coeficiente de curtosis (g2)", 
-                expresion: `<div class="ecuacion-flex"><span>g<span class="sub">2</span> =</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">4</span></div></div> <span>- 3</span></div>`, 
-                idReal: 11 
-            },
-            { 
-                nombre: "Decil 2 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>D<span class="sub">2</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 12 
-            },
-            { 
-                nombre: "Decil 9 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>D<span class="sub">9</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 13 
-            },
-            { 
-                nombre: "Percentil 29", 
-                expresion: `<div class="ecuacion-flex"><span>P<span class="sub">29</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 14 
-            },
-            { 
-                nombre: "Percentil 92 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>P<span class="sub">92</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 15 
-            },
-            { 
-                nombre: "Covarianza", 
-                expresion: `<div class="ecuacion-flex"><span>σ<span class="sub">xy</span> =</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div> <div class="variable-barra"><div class="barra-sup"></div>y</div></div>`, 
-                idReal: 16 
-            },
-            { 
-                nombre: "Coeficiente de Pearson", 
-                expresion: `<div class="ecuacion-flex"><span>r =</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span> · σ<span class="sub">y</span></div></div></div>`, 
-                idReal: 17 
-            },
-            { 
-                nombre: "Recta regresión Y sobre X", 
-                expresion: `<div class="ecuacion-flex"><span>y -</span> <div class="variable-barra"><div class="barra-sup"></div>y</div> <span>=</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span><span class="sup">2</span></div></div> <span>(x -</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span>)</span></div>`, 
-                idReal: 18 
-            },
-            { 
-                nombre: "Coeficiente de variación", 
-                expresion: `<div class="ecuacion-flex"><span>CV =</span> <div class="fraccion"><div class="numerador">σ</div><div class="denominador">|<div class="variable-barra"><div class="barra-sup"></div>x</div>|</div></div></div>`, 
-                idReal: 19 
-            },
-            { 
-                nombre: "Percentil 80 (Datos continuos)", 
-                expresion: `<div class="ecuacion-flex"><span>P<span class="sub">80</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, 
-                idReal: 20 
-            },
-            { 
-                nombre: "Recta regresión X sobre Y", 
-                expresion: `<div class="ecuacion-flex"><span>x -</span> <div class="variable-barra"><div class="barra-sup"></div>x</div> <span>=</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">y</span><span class="sup">2</span></div></div> <span>(y -</span> <div class="variable-barra"><div class="barra-sup"></div>y</div><span>)</span></div>`, 
-                idReal: 21 
-            }
+            { nombre: "Media", expresion: `<div class="ecuacion-flex"><div class="variable-barra"><div class="barra-sup"></div>x</div> <span>=</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span>n<span class="sub">i</span></div><div class="denominador">N</div></div></div>`, idReal: 1 },
+            { nombre: "Mediana (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>M<span class="sub">e</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">2</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 2 },
+            { nombre: "Moda (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>M<span class="sub">o</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador">Δn<span class="sub">i</span></div><div class="denominador">Δn<span class="sub">i</span> + Δn<span class="sub">i+1</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 3 },
+            { nombre: "Varianza", expresion: `<div class="ecuacion-flex"><span>σ<span class="sup">2</span> =</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span></div>`, idReal: 4 },
+            { nombre: "Desviación típica", expresion: `<div class="ecuacion-flex"><span>σ =</span> <div class="raiz-cuadrada"><span class="simbolo">√</span><span class="radicando"><div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span><span class="sup">2</span>n<span class="sub">i</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span class="sup">2</span></span></div></div>`, idReal: 5 },
+            { nombre: "Cuartil 1 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>Q<span class="sub">1</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 6 },
+            { nombre: "Cuartil 3 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>Q<span class="sub">3</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">3N</div><div class="denominador">4</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 7 },
+            { nombre: "Rango o recorrido", expresion: `<div class="ecuacion-flex"><span>R = x<span class="sub">max</span> - x<span class="sub">min</span></span></div>`, idReal: 8 },
+            { nombre: "Rango intercuartílico", expresion: `<div class="ecuacion-flex"><span>RI = Q<span class="sub">3</span> - Q<span class="sub">1</span></span></div>`, idReal: 9 },
+            { nombre: "Coeficiente de asimetría (g1)", expresion: `<div class="ecuacion-flex"><span>g<span class="sub">1</span> =</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">3</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">3</span></div></div></div>`, idReal: 10 },
+            { nombre: "Coeficiente de curtosis (g2)", expresion: `<div class="ecuacion-flex"><span>g<span class="sub">2</span> =</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">1</div><div class="denominador">N</div></div> ∑ (x<span class="sub">i</span> - <div class="variable-barra"><div class="barra-sup"></div>x</div>)<span class="sup">4</span> n<span class="sub">i</span></div><div class="denominador">σ<span class="sup">4</span></div></div> <span>- 3</span></div>`, idReal: 11 },
+            { nombre: "Decil 2 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>D<span class="sub">2</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">2N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 12 },
+            { nombre: "Decil 9 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>D<span class="sub">9</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">9N</div><div class="denominador">10</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 13 },
+            { nombre: "Percentil 29", expresion: `<div class="ecuacion-flex"><span>P<span class="sub">29</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">29N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 14 },
+            { nombre: "Percentil 92 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>P<span class="sub">92</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">92N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 15 },
+            { nombre: "Covarianza", expresion: `<div class="ecuacion-flex"><span>σ<span class="sub">xy</span> =</span> <div class="fraccion"><div class="numerador">∑ x<span class="sub">i</span> y<span class="sub">j</span> n<span class="sub">ij</span></div><div class="denominador">N</div></div> <span>-</span> <div class="variable-barra"><div class="barra-sup"></div>x</div> <div class="variable-barra"><div class="barra-sup"></div>y</div></div>`, idReal: 16 },
+            { nombre: "Coeficiente de Pearson", expresion: `<div class="ecuacion-flex"><span>r =</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span> · σ<span class="sub">y</span></div></div></div>`, idReal: 17 },
+            { nombre: "Recta regresión Y sobre X", expresion: `<div class="ecuacion-flex"><span>y -</span> <div class="variable-barra"><div class="barra-sup"></div>y</div> <span>=</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">x</span><span class="sup">2</span></div></div> <span>(x -</span> <div class="variable-barra"><div class="barra-sup"></div>x</div><span>)</span></div>`, idReal: 18 },
+            { nombre: "Coeficiente de variación", expresion: `<div class="ecuacion-flex"><span>CV =</span> <div class="fraccion"><div class="numerador">σ</div><div class="denominador">|<div class="variable-barra"><div class="barra-sup"></div>x</div>|</div></div></div>`, idReal: 19 },
+            { nombre: "Percentil 80 (Datos continuos)", expresion: `<div class="ecuacion-flex"><span>P<span class="sub">80</span> = L<span class="sub">i</span> +</span> <div class="fraccion"><div class="numerador"><div class="fraccion"><div class="numerador">80N</div><div class="denominador">100</div></div> - N<span class="sub">i-1</span></div><div class="denominador">n<span class="sub">i</span></div></div> <span>· a<span class="sub">i</span></span></div>`, idReal: 20 },
+            { nombre: "Recta regresión X sobre Y", expresion: `<div class="ecuacion-flex"><span>x -</span> <div class="variable-barra"><div class="barra-sup"></div>x</div> <span>=</span> <div class="fraccion"><div class="numerador">σ<span class="sub">xy</span></div><div class="denominador">σ<span class="sub">y</span><span class="sup">2</span></div></div> <span>(y -</span> <div class="variable-barra"><div class="barra-sup"></div>y</div><span>)</span></div>`, idReal: 21 }
         ];
 
         const coloresEquipos = ["#00f3ff", "#ff8a00", "#ff2a2a", "#00ff66", "#da70d6", "#ffcc00"];
@@ -556,6 +519,10 @@
         let tiempoRestanteSegundos = 0;
 
         window.onload = function() { generarInputsGrupos(); };
+
+        /* FUNCIONES DE LA VENTANA EMERGENTE (MODAL LEYENDA) */
+        function abrirLeyenda() { document.getElementById('modal-leyenda').style.display = 'flex'; }
+        function cerrarLeyenda() { document.getElementById('modal-leyenda').style.display = 'none'; }
 
         function generarInputsGrupos() {
             const numInput = document.getElementById('num-grupos');
@@ -664,7 +631,7 @@
             const span = document.getElementById('grupo-actual');
             span.innerText = g.nombre; span.style.backgroundColor = g.color;
             document.getElementById('puntuaciones-vivas').innerHTML = grupos.map(x => 
-                `<span style="border-bottom:3px solid ${x.color}; margin:0 10px; color:#fff;">${x.nombre}: <b>${x.puntos}</b></span>`
+                `<span style="border-bottom:3px solid ${x.color}; margin:0 10px; color:#fff; display:inline-block; padding-bottom:2px;">${x.nombre}: <b>${x.puntos}</b></span>`
             ).join('');
         }
 
